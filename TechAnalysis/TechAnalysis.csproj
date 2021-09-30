@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <AssemblyName>SquidEyes.TechAnalysis</AssemblyName>
+    <RootNamespace>SquidEyes.TechAnalysis</RootNamespace>
+    <Authors>Louis S. Berman</Authors>
+    <Description>A collection of common technical analysis indicators</Description>
+    <Copyright>Copyright 2021 by Louis S. Berman</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageTags />
+    <PackageReleaseNotes />
+  </PropertyGroup>
+
+</Project>
