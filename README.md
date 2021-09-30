@@ -8,7 +8,7 @@
 |**DEMA**|Double Exponential Moving Average|DemaIndicator|Moving Average|
 |**EMA**|Exponential Moving Average|EmaIndicator|Moving Average|
 |**KAMA**|Kaufman's Adaptive Moving Average|KamaIndicator|Moving Average|
-|**KLTNR**|Keltner Channel|KelnerChannelIndictor|Channels|
+|**KLTNR**|Keltner Channel|KelnerChannelIndicator|Channels|
 |**LINREG**|Linear Regression|LinRegIndicator|Regression|
 |**MACD**|Moving Average Convergence Divergence|MacdIndicator|Statistics|
 |**SMA**|Simple Moving Average|SmaIndicator|Moving Average|
