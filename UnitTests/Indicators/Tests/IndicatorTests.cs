@@ -107,7 +107,7 @@ namespace SquidEyes.UnitTests
         {
             var indicator = new AtrIndicator(10);
 
-            foreach (var baseline in GetValueBaseline(AtrBaseline))
+            foreach (var baseline in GetAtrBaselines())
             {
                 var result = indicator.AddAndCalc(baseline.Candle);
 
