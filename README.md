@@ -1,21 +1,22 @@
 **SquidEyes.TechAnalysis** is a collection of high-performance C#/.NET 5.0 technical indicators with a hand-curated set of matching unit-tests.
 
-|Indicator|Name|Kind|
+|Indicator|Name|Class|Kind|
 |---|---|---|
-|**ATR**|Average True Range|Statistics|
-|**BBAND**|Bollinger Bands|Channels|
-|**CCI**|Commodity Channel Index|Oscillator|
-|**DEMA**|Double Exponential Moving Average|Moving Average|
-|**EMA**|Exponential Moving Average|Moving Average|
-|**KAMA**|Kaufman's Adaptive Moving Average|Moving Average|
-|**KELTNER**|Keltner Channel|Channels|
-|**LINNREG**|Linear Regression|Regression|
-|**MACD**|Moving Average Convergence Divergence|Statistics|
-|**SMA**|Simple Moving Average|Moving Average|
-|**SMMA**|Smoothed Moving Average|Moving Average|
-|**STDDEV**|Standard Deviation|Statistics|
-|**TEMA**|Triple Exponential Moving Average|Moving Average|
-|**WMA**|Weighted Moving Average|Moving Average|
+|**ATR**|Average True Range|AtrIndicator|Statistics|
+|**BBAND**|Bollinger Bands|BollingerBandsIndictor|Channels|
+|**CCI**|Commodity Channel Index|CciIndicator|Oscillator|
+|**DEMA**|Double Exponential Moving Average|DemaIndicator|Moving Average|
+|**EMA**|Exponential Moving Average|EmaIndicator|Moving Average|
+|**KAMA**|Kaufman's Adaptive Moving Average|KamaIndicator|Moving Average|
+|**KELTNER**|Keltner Channel|KelnerChannelIndictor|Channels|
+|**LINREG**|Linear Regression|LinRegIndicator|Regression|
+|**MACD**|Moving Average Convergence Divergence|MacdIndicator|Statistics|
+|**SMA**|Simple Moving Average|SmaIndicator|Moving Average|
+|**SMMA**|Smoothed Moving Average|SmmaIndicator|Moving Average|
+|**STDDEV**|Standard Deviation|StdDevIndicator|Statistics|
+|**STOCH**|Stochastics Oscillator|StochasticsIndicator|Oscillator|
+|**TEMA**|Triple Exponential Moving Average|TemaIndicator|Moving Average|
+|**WMA**|Weighted Moving Average|WmaIndicator|Moving Average|
 
 To be clear, there are a good number of C#-based technical indicator libraries (i.e. <a href="https://github.com/karlwancl/Trady" target="_blank">Trady</a>, <a href="https://github.com/DaveSkender/Stock.Indicators" target="_blank">Stock Indicators</a>, <a href="https://github.com/hmG3/TA-Lib.NETCore" target="_blank">TA-Lib.NETCore</a>, and <a href="https://github.com/anilca/NetTrader.Indicator" target="_blank">NetTrader</a>, just to name a few), but the author found each of these to be objectionable for one or more reasons:
 
