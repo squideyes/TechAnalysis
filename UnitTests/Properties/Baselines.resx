@@ -157,9 +157,6 @@
   <data name="StdDevBaseline" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\indicators\baselines\stddevbaseline.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="Stochastics" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\indicators\baselines\stochastics.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
   <data name="StochasticsBaseline" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\indicators\baselines\stochasticsbaseline.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
