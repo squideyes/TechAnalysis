@@ -32,6 +32,16 @@ namespace SquidEyes.TechAnalysis
         public static bool Approximates(this double a, double b) =>
             Math.Abs(a - b) < DOUBLE_EPSILON;
 
+        public static int ToDecimalDigits(this double value)
+        {
+            var digits = 0;
+
+            while (Math.Round(value, digits) != value)
+                digits++;
+
+            return digits;
+        }
+
         public static void ForEach<T>(this IEnumerable<T> items, Action<T> action)
         {
             foreach (var item in items)

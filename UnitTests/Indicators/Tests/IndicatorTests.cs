@@ -19,6 +19,7 @@
 // IN THE SOFTWARE.
 
 using System;
+using System.Collections.Generic;
 using SquidEyes.TechAnalysis;
 using Xunit;
 using static SquidEyes.UnitTests.Properties.Baselines;
@@ -117,40 +118,40 @@ namespace SquidEyes.UnitTests
         }
 
         [Fact]
-        public void DemaIndicatorShouldMatchBaseline() =>
-            ValueBaselineTest(new DemaIndicator(10, PriceToUse.Close), DemaBaseline);
+        public void DemaIndicatorShouldMatchBaseline() => ValueBaselineTest(
+            new DemaIndicator(10, PriceToUse.Close), GetDemaBaselines());
 
         [Fact]
-        public void EmaIndicatorShouldMatchBaseline() =>
-            ValueBaselineTest(new EmaIndicator(10, PriceToUse.Close), EmaBaseline);
+        public void EmaIndicatorShouldMatchBaseline() => ValueBaselineTest(
+            new EmaIndicator(10, PriceToUse.Close), GetEmaBaselines());
 
         [Fact]
-        public void SmaIndicatorShouldMatchBaseline() =>
-            ValueBaselineTest(new SmaIndicator(10, PriceToUse.Close), SmaBaseline);
+        public void SmaIndicatorShouldMatchBaseline() => ValueBaselineTest(
+            new SmaIndicator(10, PriceToUse.Close), GetSmaBaselines());
 
         [Fact]
-        public void TemaIndicatorShouldMatchBaseline() =>
-            ValueBaselineTest(new TemaIndicator(10, PriceToUse.Close), TemaBaseline);
+        public void TemaIndicatorShouldMatchBaseline() => ValueBaselineTest(
+            new TemaIndicator(10, PriceToUse.Close), GetTemaBaselines());
 
         [Fact]
-        public void WmaIndicatorShouldMatchBaseline() =>
-            ValueBaselineTest(new WmaIndicator(10, PriceToUse.Close), WmaBaseline);
+        public void WmaIndicatorShouldMatchBaseline() => ValueBaselineTest(
+            new WmaIndicator(10, PriceToUse.Close), GetWmaBaselines());
 
         [Fact]
-        public void LinRegIndicatorShouldMatchBaseline() =>
-            ValueBaselineTest(new LinRegIndicator(10, PriceToUse.Close), LinRegBaseline);
+        public void LinRegIndicatorShouldMatchBaseline() => ValueBaselineTest(
+            new LinRegIndicator(10, PriceToUse.Close), GetLinRegBaselines());
 
         [Fact]
-        public void StdDevIndicatorShouldMatchBaseline() =>
-            ValueBaselineTest(new StdDevIndicator(10, PriceToUse.Close), StdDevBaseline);
+        public void StdDevIndicatorShouldMatchBaseline() => ValueBaselineTest(
+            new StdDevIndicator(10, PriceToUse.Close), GetStdDevBaselines());
 
         [Fact]
-        public void KamaIndicatorShouldMatchBaseline() =>
-            ValueBaselineTest(new KamaIndicator(10, 5, 15, PriceToUse.Close), KamaBaseline);
+        public void KamaIndicatorShouldMatchBaseline() => ValueBaselineTest(
+            new KamaIndicator(10, 5, 15, PriceToUse.Close), GetKamaBaselines());
 
         [Fact]
-        public void SmmaIndicatorShouldMatchBaseline() =>
-            ValueBaselineTest(new SmmaIndicator(10, PriceToUse.Close), SmaaBaseline);
+        public void SmmaIndicatorShouldMatchBaseline() => ValueBaselineTest(
+            new SmmaIndicator(10, PriceToUse.Close), GetSmmaBaselines());
 
         [Fact]
         public void StochasticsIndicatorShouldMatchBaseline()
@@ -161,7 +162,7 @@ namespace SquidEyes.UnitTests
             {
                 var add = indicator.AddAndCalc(baseline.Candle);
 
-                if(!add.K.Approximates(baseline.K))
+                if (!add.K.Approximates(baseline.K))
                     throw new ArgumentOutOfRangeException(nameof(add.K));
 
                 if (!add.D.Approximates(baseline.D))
@@ -177,14 +178,17 @@ namespace SquidEyes.UnitTests
             }
         }
 
-        private static void ValueBaselineTest(IBasicIndicator indicator, string csv)
+        private static void ValueBaselineTest(
+            IBasicIndicator indicator, List<ValueBaseline> baselines)
         {
-            foreach (var baseline in GetValueBaseline(csv))
+            foreach (var baseline in baselines)
             {
                 var result = indicator.AddAndCalc(baseline.Candle);
 
-                if (!result.Value.Approximates(baseline.Value))
-                    throw new ArgumentOutOfRangeException(nameof(csv));
+                var digits = baseline.Value.ToDecimalDigits();
+
+                if (!Math.Round(result.Value, digits).Approximates(baseline.Value))
+                    throw new ArgumentOutOfRangeException(nameof(result));
             }
         }
     }

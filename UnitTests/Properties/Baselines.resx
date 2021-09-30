@@ -127,20 +127,11 @@
   <data name="CciBaseline" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\indicators\baselines\ccibaseline.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="DemaBaseline" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\indicators\baselines\demabaseline.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="EmaBaseline" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\indicators\baselines\emabaseline.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
   <data name="KamaBaseline" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\indicators\baselines\kamabaseline.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="KeltnerChannelBaseline" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\indicators\baselines\keltnerchannelbaseline.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="LinRegBaseline" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\indicators\baselines\linregbaseline.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="MacdBaseline" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\indicators\baselines\macdbaseline.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
@@ -148,22 +139,7 @@
   <data name="RsiBaseline" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\indicators\baselines\rsibaseline.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="SmaaBaseline" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\indicators\baselines\smaabaseline.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="SmaBaseline" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\indicators\baselines\smabaseline.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="StdDevBaseline" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\indicators\baselines\stddevbaseline.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
   <data name="StochasticsBaseline" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\indicators\baselines\stochasticsbaseline.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="TemaBaseline" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\indicators\baselines\temabaseline.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="WmaBaseline" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\indicators\baselines\wmabaseline.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
 </root>

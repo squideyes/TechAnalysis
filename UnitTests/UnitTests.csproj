@@ -24,19 +24,11 @@
     <Content Include="Indicators\Baselines\AtrBaseline.csv" />
     <Content Include="Indicators\Baselines\BollingerBandsBaseline.csv" />
     <Content Include="Indicators\Baselines\CciBaseline.csv" />
-    <Content Include="Indicators\Baselines\DemaBaseline.csv" />
-    <Content Include="Indicators\Baselines\EmaBaseline.csv" />
     <Content Include="Indicators\Baselines\KamaBaseline.csv" />
     <Content Include="Indicators\Baselines\KeltnerChannelBaseline.csv" />
-    <Content Include="Indicators\Baselines\LinRegBaseline.csv" />
     <Content Include="Indicators\Baselines\MacdBaseline.csv" />
     <Content Include="Indicators\Baselines\RsiBaseline.csv" />
-    <Content Include="Indicators\Baselines\SmaaBaseline.csv" />
-    <Content Include="Indicators\Baselines\SmaBaseline.csv" />
-    <Content Include="Indicators\Baselines\StdDevBaseline.csv" />
     <Content Include="Indicators\Baselines\StochasticsBaseline.csv" />
-    <Content Include="Indicators\Baselines\TemaBaseline.csv" />
-    <Content Include="Indicators\Baselines\WmaBaseline.csv" />
   </ItemGroup>
 
   <ItemGroup>
