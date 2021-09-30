@@ -22,18 +22,16 @@ using System;
 
 namespace SquidEyes.TechAnalysis
 {
-    public class AtrIndicator 
+    public class AtrIndicator : BasicIndicatorBase, IBasicIndicator
     {
         private int index = 0;
         private double lastValue = 0.0;
         private ICandle lastCandle = null;
 
-        public AtrIndicator(int period)
+        public AtrIndicator(int period, PriceToUse priceToUse)
+            : base(period, priceToUse, 2)
         {
-            Period = period;
         }
-
-        public int Period { get; }
 
         public DataPoint AddAndCalc(ICandle candle)
         {

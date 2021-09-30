@@ -22,7 +22,6 @@ using System;
 using System.Collections.Generic;
 using SquidEyes.TechAnalysis;
 using Xunit;
-using static SquidEyes.UnitTests.Properties.Baselines;
 using static SquidEyes.UnitTests.TestData;
 
 namespace SquidEyes.UnitTests
@@ -34,17 +33,17 @@ namespace SquidEyes.UnitTests
         {
             var indicator = new KeltnerChannelIndictor(20, PriceToUse.Close, 1.5);
 
-            foreach (var baseline in GetThreeBandBaselines(KeltnerChannelBaseline))
+            foreach (var baseline in GetKeltnerChannelBaselines())
             {
                 var result = indicator.AddAndCalc(baseline.Candle);
 
-                if (!result.Upper.Approximates(baseline.Upper))
+                if (!IsGoodCalc(result.Upper, baseline.Upper))
                     throw new ArgumentOutOfRangeException(nameof(result));
 
-                if (!result.Middle.Approximates(baseline.Middle))
+                if (!IsGoodCalc(result.Middle, baseline.Middle))
                     throw new ArgumentOutOfRangeException(nameof(result));
 
-                if (!result.Lower.Approximates(baseline.Lower))
+                if (!IsGoodCalc(result.Lower, baseline.Lower))
                     throw new ArgumentOutOfRangeException(nameof(result));
             }
         }
@@ -54,17 +53,17 @@ namespace SquidEyes.UnitTests
         {
             var indicator = new BollingerBandsIndictor(10, PriceToUse.Close, 2.0);
 
-            foreach (var baseline in GetThreeBandBaselines(BollingerBandsBaseline))
+            foreach (var baseline in GetBollingerBandsBaselines())
             {
                 var result = indicator.AddAndCalc(baseline.Candle);
 
-                if (!result.Upper.Approximates(baseline.Upper))
+                if (!IsGoodCalc(result.Upper, baseline.Upper))
                     throw new ArgumentOutOfRangeException(nameof(result));
 
-                if (!result.Middle.Approximates(baseline.Middle))
+                if (!IsGoodCalc(result.Middle, baseline.Middle))
                     throw new ArgumentOutOfRangeException(nameof(result));
 
-                if (!result.Lower.Approximates(baseline.Lower))
+                if (!IsGoodCalc(result.Lower, baseline.Lower))
                     throw new ArgumentOutOfRangeException(nameof(result));
             }
         }
@@ -78,44 +77,24 @@ namespace SquidEyes.UnitTests
             {
                 var result = indicator.AddAndCalc(baseline.Candle);
 
-                if (!result.Value.Approximates(baseline.Value))
+                if (!IsGoodCalc(result.Average, baseline.Average))
                     throw new ArgumentOutOfRangeException(nameof(result));
 
-                if (!result.Average.Approximates(baseline.Average))
+                if (!IsGoodCalc(result.Value, baseline.Value))
                     throw new ArgumentOutOfRangeException(nameof(result));
 
-                if (!result.Difference.Approximates(baseline.Difference))
-                    throw new ArgumentOutOfRangeException(nameof(result));
-            }
-        }
-
-        [Fact]
-        public void CciIndicatorShouldMatchBaseline()
-        {
-            var indicator = new CciIndicator(20, PriceToUse.Close);
-
-            foreach (var baseline in GetValueBaseline(CciBaseline))
-            {
-                var result = indicator.AddAndCalc(baseline.Candle);
-
-                if (!result.Value.Approximates(baseline.Value))
+                if (!IsGoodCalc(result.Difference, baseline.Difference))
                     throw new ArgumentOutOfRangeException(nameof(result));
             }
         }
 
         [Fact]
-        public void AtrIndicatorShouldMatchBaseline()
-        {
-            var indicator = new AtrIndicator(10);
+        public void AtrIndicatorShouldMatchBaseline() => ValueBaselineTest(
+            new AtrIndicator(10, PriceToUse.Close), GetAtrBaselines());
 
-            foreach (var baseline in GetAtrBaselines())
-            {
-                var result = indicator.AddAndCalc(baseline.Candle);
-
-                if (!result.Value.Approximates(baseline.Value))
-                    throw new ArgumentOutOfRangeException(nameof(result));
-            }
-        }
+        [Fact]
+        public void CciIndicatorShouldMatchBaseline() => ValueBaselineTest(
+            new CciIndicator(20, PriceToUse.Close), GetCciBaselines());
 
         [Fact]
         public void DemaIndicatorShouldMatchBaseline() => ValueBaselineTest(
@@ -185,11 +164,12 @@ namespace SquidEyes.UnitTests
             {
                 var result = indicator.AddAndCalc(baseline.Candle);
 
-                var digits = baseline.Value.ToDecimalDigits();
-
-                if (!Math.Round(result.Value, digits).Approximates(baseline.Value))
+                if (!IsGoodCalc(result.Value, baseline.Value))
                     throw new ArgumentOutOfRangeException(nameof(result));
             }
         }
+
+        private static bool IsGoodCalc(double actual, double expected) =>
+            Math.Round(actual, expected.ToDecimalDigits()) == expected;
     }
 }

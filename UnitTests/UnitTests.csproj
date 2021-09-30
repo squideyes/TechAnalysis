@@ -21,17 +21,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="Indicators\Baselines\AtrBaseline.csv" />
-    <Content Include="Indicators\Baselines\BollingerBandsBaseline.csv" />
-    <Content Include="Indicators\Baselines\CciBaseline.csv" />
-    <Content Include="Indicators\Baselines\KamaBaseline.csv" />
-    <Content Include="Indicators\Baselines\KeltnerChannelBaseline.csv" />
-    <Content Include="Indicators\Baselines\MacdBaseline.csv" />
-    <Content Include="Indicators\Baselines\RsiBaseline.csv" />
-    <Content Include="Indicators\Baselines\StochasticsBaseline.csv" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="DeepCloner" Version="0.10.2" />
     <PackageReference Include="FluentAssertions" Version="6.1.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
@@ -48,21 +37,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TechAnalysis\TechAnalysis.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Properties\Baselines.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Baselines.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="Properties\Baselines.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Baselines.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
 
 </Project>
