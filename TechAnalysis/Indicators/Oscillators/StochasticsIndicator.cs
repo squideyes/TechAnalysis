@@ -44,7 +44,7 @@ namespace SquidEyes.TechAnalysis
 
         public bool IsPrimed => candles.IsPrimed;
 
-        public (double K, double D) AddAndCalc(ICandle candle)
+        public StochasticsResult AddAndCalc(ICandle candle)
         {
             if (candle == null)
                 throw new ArgumentNullException(nameof(candle));
@@ -53,10 +53,10 @@ namespace SquidEyes.TechAnalysis
 
             fastK.Add(GetFastK());
 
-            return GetKD();
+            return GetStochasticsResult(candle);
         }
 
-        public (double K, double D) UpdateAndCalc(ICandle candle)
+        public StochasticsResult UpdateAndCalc(ICandle candle)
         {
             if (candle == null)
                 throw new ArgumentNullException(nameof(candle));
@@ -65,10 +65,10 @@ namespace SquidEyes.TechAnalysis
 
             fastK.Update(GetFastK());
 
-            return GetKD();
+            return GetStochasticsResult(candle);
         }
 
-        private (double, double) GetKD()
+        private StochasticsResult GetStochasticsResult(ICandle candle)
         {
             var smaFastK = new SmaIndicator(smooth, PriceToUse.Close);
             var smaK = new SmaIndicator(periodD, PriceToUse.Close);
@@ -82,7 +82,12 @@ namespace SquidEyes.TechAnalysis
                 d = smaK.AddAndCalc(fastK[i].OpenOn, k).Value;
             }
 
-            return (k, d);
+            return new StochasticsResult
+            {
+                OpenOn = candle.OpenOn,
+                K = k,
+                D = d
+            };
         }
 
         private (DateTime, double) GetFastK()

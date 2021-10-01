@@ -37,7 +37,7 @@ namespace SquidEyes.TechAnalysis
             typical = new SlidingBuffer<double>(period, true);
         }
 
-        public DataPoint AddAndCalc(ICandle candle)
+        public BasicResult AddAndCalc(ICandle candle)
         {
             double result;
 
@@ -62,7 +62,7 @@ namespace SquidEyes.TechAnalysis
 
             barCount++;
 
-            return new DataPoint(candle.OpenOn, result);
+            return GetBasicResult(candle.OpenOn, result);
         }
     }
 }

@@ -20,8 +20,14 @@
 
 namespace SquidEyes.TechAnalysis
 {
-    public interface IBasicIndicator
+    public class StochasticsResult : ResultBase
     {
-        DataPoint AddAndCalc(ICandle candle);
+        public StochasticsResult()
+            : base(ResultKind.StochasticsResult)
+        {
+        }
+
+        public double K { get; init; }
+        public double D { get; init; }
     }
 }

@@ -36,25 +36,27 @@ namespace SquidEyes.TechAnalysis
             sumSeries = new SlidingBuffer<double>(period + 1, true);
         }
 
-        public DataPoint AddAndCalc(ICandle candle)
+        public BasicResult AddAndCalc(ICandle candle)
         {
-            var dataPoint = candle.ToDataPoint(PriceToUse);
+            var (openOn, value) = candle.ToBasicResult(PriceToUse)
+                .Funcify(r => (r.OpenOn, r.Value));
 
-            prices.Add(dataPoint.Value);
+            prices.Add(value);
 
             sumSeries.Add(0.0);
 
             if (index < 1)
             {
-                sumSeries.Update(dataPoint.Value);
+                sumSeries.Update(value);
 
                 index++;
 
-                return new DataPoint(dataPoint.OpenOn, 0.0);
+                return GetBasicResult(openOn, 0.0);
             }
             else
             {
-                sumSeries.Update(dataPoint.Value + sumSeries[1] - (index >= Period ? prices[Period] : 0.0));
+                sumSeries.Update(value + sumSeries[1] - (index >= Period ?
+                    prices[Period] : 0.0));
 
                 var average = sumSeries[0] / Math.Min(index + 1, Period);
 
@@ -63,7 +65,8 @@ namespace SquidEyes.TechAnalysis
                 for (var barsBack = Math.Min(index, Period - 1); barsBack >= 0; barsBack--)
                     sum += (prices[barsBack] - average) * (prices[barsBack] - average);
 
-                var result = new DataPoint(dataPoint.OpenOn, Math.Sqrt(sum / Math.Min(index + 1, Period)));
+                var result = GetBasicResult(openOn, 
+                    Math.Sqrt(sum / Math.Min(index + 1, Period)));
 
                 index++;
 

@@ -18,20 +18,26 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
 // IN THE SOFTWARE.
 
+using System;
+
 namespace SquidEyes.TechAnalysis
 {
-    public abstract class BasicIndicatorBase
+    public abstract class BasicIndicatorBase 
     {
         public BasicIndicatorBase(int period, PriceToUse priceToUse, int minPeriod)
         {
-            Period = period.Validated(
-                nameof(period), v => v >= minPeriod);
+            Period = period.Validated(nameof(period), v => v >= minPeriod);
 
-            PriceToUse = priceToUse.Validated(
-                nameof(priceToUse), v => v.IsEnumValue());
+            PriceToUse = priceToUse.Validated(nameof(priceToUse), v => v.IsEnumValue());
         }
 
         protected int Period { get; }
         protected PriceToUse PriceToUse { get; }
+
+        static protected BasicResult GetBasicResult(DateTime openOn, double value) => new()
+        {
+            OpenOn = openOn,
+            Value = value
+        };
     }
 }

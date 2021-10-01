@@ -20,13 +20,6 @@
 
 namespace SquidEyes.TechAnalysis
 {
-    public class MacdResult
-    {
-        public double Value { get; init; }
-        public double Average { get; init; }
-        public double Difference { get; init; }
-    }
-
     public class MacdIndicator
     {
         private readonly SlidingBuffer<double> fastEmas;
@@ -60,7 +53,7 @@ namespace SquidEyes.TechAnalysis
 
         public MacdResult AddAndCalc(ICandle candle)
         {
-            var dataPoint = candle.ToDataPoint(priceToUse);
+            var dataPoint = candle.ToBasicResult(priceToUse);
 
             fastEmas.Add(0.0);
             slowEmas.Add(0.0);
@@ -74,6 +67,7 @@ namespace SquidEyes.TechAnalysis
 
                 return new MacdResult()
                 {
+                    OpenOn = candle.OpenOn,
                     Value = 0.0,
                     Average = 0.0,
                     Difference = 0.0
@@ -92,6 +86,7 @@ namespace SquidEyes.TechAnalysis
 
                 return new MacdResult()
                 {
+                    OpenOn = candle.OpenOn,
                     Value = macd,
                     Average = average,
                     Difference = macd - average,

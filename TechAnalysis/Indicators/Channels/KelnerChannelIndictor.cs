@@ -52,12 +52,14 @@ namespace SquidEyes.TechAnalysis
             var x = smaDiff.AddAndCalc(candle.OpenOn, diff[0]).Value;
 
             var offset = x * offsetMultiplier;
-            
-            var upper = middle + offset;
 
-            var lower = middle - offset;
-
-            return new ChannelResult(candle.OpenOn, upper, middle, lower);
+            return new ChannelResult()
+            {
+                OpenOn = candle.OpenOn,
+                Upper = middle + offset,
+                Middle = middle,
+                Lower = middle - offset
+            };
         }
     }
 }

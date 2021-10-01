@@ -20,29 +20,15 @@
 
 namespace SquidEyes.TechAnalysis
 {
-    public class DemaIndicator : BasicIndicatorBase, IBasicIndicator
+    public class MacdResult : ResultBase
     {
-        private readonly EmaIndicator ema1;
-        private readonly EmaIndicator ema2;
-
-        public DemaIndicator(int period, PriceToUse priceToUse)
-            : base(period, priceToUse, 2)
+        public MacdResult()
+            : base(ResultKind.MacdResult)
         {
-            ema1 = new EmaIndicator(Period, priceToUse);
-            ema2 = new EmaIndicator(Period, priceToUse);
         }
 
-        public BasicResult AddAndCalc(ICandle candle)
-        {
-            var value1 = ema1.AddAndCalc(candle).Value;
-
-            var result = GetBasicResult(candle.OpenOn, value1);
-
-            var value2 = ema2.AddAndCalc(result).Value;
-
-            var dema = (2.0 * value1) - value2;
-
-            return GetBasicResult(candle.OpenOn, dema);
-        }
+        public double Value { get; init; }
+        public double Average { get; init; }
+        public double Difference { get; init; }
     }
 }

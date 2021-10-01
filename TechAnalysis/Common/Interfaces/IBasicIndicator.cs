@@ -18,12 +18,10 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
 // IN THE SOFTWARE.
 
-using System;
-
 namespace SquidEyes.TechAnalysis
 {
-    public interface IResult
+    public interface IBasicIndicator
     {
-        public DateTime DateTime { get; }
+        BasicResult AddAndCalc(ICandle candle);
     }
 }

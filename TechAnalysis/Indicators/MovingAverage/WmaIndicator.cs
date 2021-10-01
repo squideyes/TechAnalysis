@@ -37,7 +37,7 @@ namespace SquidEyes.TechAnalysis
             buffer = new SlidingBuffer<float>(period + 1);
         }
 
-        public DataPoint AddAndCalc(ICandle candle)
+        public BasicResult AddAndCalc(ICandle candle)
         {
             var price = candle.GetPrice(PriceToUse);
 
@@ -58,7 +58,7 @@ namespace SquidEyes.TechAnalysis
             priorWsum = wsum;
             priorSum = sum;
 
-            return new DataPoint(candle.OpenOn, wma);
+            return GetBasicResult(candle.OpenOn, wma);
         }
     }
 }

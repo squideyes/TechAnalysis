@@ -46,9 +46,9 @@ namespace SquidEyes.TechAnalysis
             values = new SlidingBuffer<double>(period + 1);
         }
 
-        public DataPoint AddAndCalc(ICandle candle)
+        public BasicResult AddAndCalc(ICandle candle)
         {
-            var dataPoint = candle.ToDataPoint(PriceToUse);
+            var dataPoint = candle.ToBasicResult(PriceToUse);
 
             values.Add(dataPoint.Value);
 
@@ -74,8 +74,11 @@ namespace SquidEyes.TechAnalysis
 
             intercept = (values.TakeLast(Period).Sum() - slope * sumX) / period;
 
-            var result = new DataPoint(dataPoint.OpenOn,
-                index == 0 ? dataPoint.Value : (intercept + slope * (period - 1)));
+            var result = new BasicResult()
+            {
+                OpenOn = dataPoint.OpenOn,
+                Value = index == 0 ? dataPoint.Value : (intercept + slope * (period - 1))
+            };
 
             index++;
 

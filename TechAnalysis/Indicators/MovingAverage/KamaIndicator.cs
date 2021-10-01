@@ -44,15 +44,15 @@ namespace SquidEyes.TechAnalysis
             values = new SlidingBuffer<double>(period + 1, true);
         }
 
-        public DataPoint AddAndCalc(ICandle candle)
+        public BasicResult AddAndCalc(ICandle candle)
         {
-            var dataPoint = candle.ToDataPoint(PriceToUse);
+            var dataPoint = candle.ToBasicResult(PriceToUse);
 
-            DataPoint UpdateIndexAndLastResultThenGetResult(double value)
+            BasicResult UpdateIndexAndLastResultThenGetResult(double value)
             {
                 index++;
 
-                return new DataPoint(candle.OpenOn, lastResult = value);
+                return GetBasicResult(candle.OpenOn, lastResult = value);
             }
 
             values.Add(dataPoint.Value);

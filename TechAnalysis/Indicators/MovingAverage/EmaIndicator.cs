@@ -33,17 +33,17 @@ namespace SquidEyes.TechAnalysis
             constant2 = 1.0 - (2.0 / (1 + period));
         }
 
-        public DataPoint AddAndCalc(ICandle candle) =>
-            AddAndCalc(candle.ToDataPoint(PriceToUse.Close));
+        public BasicResult AddAndCalc(ICandle candle) =>
+            AddAndCalc(candle.ToBasicResult(PriceToUse.Close));
 
-        public DataPoint AddAndCalc(DataPoint dataPoint)
+        public BasicResult AddAndCalc(BasicResult result)
         {
-            var ema = !lastEma.HasValue ? dataPoint.Value :
-                dataPoint.Value * constant1 + constant2 * lastEma;
+            var ema = !lastEma.HasValue ? result.Value :
+                result.Value * constant1 + constant2 * lastEma;
 
             lastEma = ema;
 
-            return new DataPoint(dataPoint.OpenOn, ema.Value);
+            return GetBasicResult(result.OpenOn, ema.Value);
         }
     }
 }

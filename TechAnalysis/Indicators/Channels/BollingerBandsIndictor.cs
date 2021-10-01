@@ -49,7 +49,13 @@ namespace SquidEyes.TechAnalysis
 
             var delta = stdDevFactor * stdDevValue;
 
-            return new ChannelResult(candle.OpenOn, smaValue + delta, smaValue, smaValue - delta);
+            return new ChannelResult()
+            {
+                OpenOn = candle.OpenOn,
+                Upper = smaValue + delta,
+                Middle = smaValue,
+                Lower = smaValue - delta
+            };
         }
     }
 }

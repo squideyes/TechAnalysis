@@ -36,10 +36,10 @@ namespace SquidEyes.TechAnalysis
             buffer = new SlidingBuffer<double>(period + 1);
         }
 
-        public DataPoint AddAndCalc(ICandle candle) =>
+        public BasicResult AddAndCalc(ICandle candle) =>
             AddAndCalc(candle.OpenOn, candle.GetPrice(PriceToUse));
 
-        public DataPoint AddAndCalc(DateTime openOn, double price)
+        public BasicResult AddAndCalc(DateTime openOn, double price)
         {
             buffer.Add(price);
 
@@ -51,7 +51,7 @@ namespace SquidEyes.TechAnalysis
 
             index++;
 
-            return new DataPoint(openOn, sma);
+            return GetBasicResult(openOn, sma);
         }
     }
 }

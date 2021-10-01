@@ -89,47 +89,47 @@ namespace SquidEyes.UnitTests
         }
 
         [Fact]
-        public void AtrIndicatorShouldMatchBaseline() => ValueBaselineTest(
+        public void AtrIndicatorShouldMatchBaseline() => BasicIndicatorBaselineTest(
             new AtrIndicator(10, PriceToUse.Close), GetAtrBaselines());
 
         [Fact]
-        public void CciIndicatorShouldMatchBaseline() => ValueBaselineTest(
+        public void CciIndicatorShouldMatchBaseline() => BasicIndicatorBaselineTest(
             new CciIndicator(20, PriceToUse.Close), GetCciBaselines());
 
         [Fact]
-        public void DemaIndicatorShouldMatchBaseline() => ValueBaselineTest(
+        public void DemaIndicatorShouldMatchBaseline() => BasicIndicatorBaselineTest(
             new DemaIndicator(10, PriceToUse.Close), GetDemaBaselines());
 
         [Fact]
-        public void EmaIndicatorShouldMatchBaseline() => ValueBaselineTest(
+        public void EmaIndicatorShouldMatchBaseline() => BasicIndicatorBaselineTest(
             new EmaIndicator(10, PriceToUse.Close), GetEmaBaselines());
 
         [Fact]
-        public void SmaIndicatorShouldMatchBaseline() => ValueBaselineTest(
+        public void SmaIndicatorShouldMatchBaseline() => BasicIndicatorBaselineTest(
             new SmaIndicator(10, PriceToUse.Close), GetSmaBaselines());
 
         [Fact]
-        public void TemaIndicatorShouldMatchBaseline() => ValueBaselineTest(
+        public void TemaIndicatorShouldMatchBaseline() => BasicIndicatorBaselineTest(
             new TemaIndicator(10, PriceToUse.Close), GetTemaBaselines());
 
         [Fact]
-        public void WmaIndicatorShouldMatchBaseline() => ValueBaselineTest(
+        public void WmaIndicatorShouldMatchBaseline() => BasicIndicatorBaselineTest(
             new WmaIndicator(10, PriceToUse.Close), GetWmaBaselines());
 
         [Fact]
-        public void LinRegIndicatorShouldMatchBaseline() => ValueBaselineTest(
+        public void LinRegIndicatorShouldMatchBaseline() => BasicIndicatorBaselineTest(
             new LinRegIndicator(10, PriceToUse.Close), GetLinRegBaselines());
 
         [Fact]
-        public void StdDevIndicatorShouldMatchBaseline() => ValueBaselineTest(
+        public void StdDevIndicatorShouldMatchBaseline() => BasicIndicatorBaselineTest(
             new StdDevIndicator(10, PriceToUse.Close), GetStdDevBaselines());
 
         [Fact]
-        public void KamaIndicatorShouldMatchBaseline() => ValueBaselineTest(
+        public void KamaIndicatorShouldMatchBaseline() => BasicIndicatorBaselineTest(
             new KamaIndicator(10, 5, 15, PriceToUse.Close), GetKamaBaselines());
 
         [Fact]
-        public void SmmaIndicatorShouldMatchBaseline() => ValueBaselineTest(
+        public void SmmaIndicatorShouldMatchBaseline() => BasicIndicatorBaselineTest(
             new SmmaIndicator(10, PriceToUse.Close), GetSmmaBaselines());
 
         [Fact]
@@ -157,7 +157,7 @@ namespace SquidEyes.UnitTests
             }
         }
 
-        private static void ValueBaselineTest(
+        private static void BasicIndicatorBaselineTest(
             IBasicIndicator indicator, List<ValueBaseline> baselines)
         {
             foreach (var baseline in baselines)

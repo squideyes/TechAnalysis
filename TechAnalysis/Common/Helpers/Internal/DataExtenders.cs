@@ -22,22 +22,23 @@ using System;
 
 namespace SquidEyes.TechAnalysis
 {
-    public class ChannelResult
+    public static class DataExtenders
     {
-        public ChannelResult(DateTime openOn, double upper, double middle, double lower)
-        {
-            OpenOn = openOn;
-            Upper = upper;
-            Middle = middle;
-            Lower = lower;
-        }
+        public static float GetPrice(this ICandle candle, PriceToUse priceToUse) => 
+            priceToUse switch
+            {
+                PriceToUse.Open => candle.Open,
+                PriceToUse.High => candle.High,
+                PriceToUse.Low => candle.Low,
+                PriceToUse.Close => candle.Close,
+                _ => throw new ArgumentOutOfRangeException(nameof(priceToUse))
+            };
 
-        public DateTime OpenOn { get; }
-        public double Upper { get; }
-        public double Middle { get; }
-        public double Lower { get; }
-
-        public override string ToString() =>
-            $"{OpenOn:MM/dd/yyyy HH:mm},{Upper},{Middle},{Lower}";
+        public static BasicResult ToBasicResult(this ICandle candle, PriceToUse priceToUse) =>
+            new()
+            {
+                OpenOn = candle.OpenOn,
+                Value = candle.GetPrice(priceToUse)
+            };
     }
 }

@@ -33,7 +33,7 @@ namespace SquidEyes.TechAnalysis
         {
         }
 
-        public DataPoint AddAndCalc(ICandle candle)
+        public BasicResult AddAndCalc(ICandle candle)
         {
             double high0 = candle.High;
             double low0 = candle.Low;
@@ -43,7 +43,7 @@ namespace SquidEyes.TechAnalysis
                 lastCandle = candle;
                 lastValue = high0 - low0;
 
-                return new DataPoint(candle.OpenOn, lastValue);
+                return GetBasicResult(candle.OpenOn, lastValue);
             }
             else
             {
@@ -58,7 +58,7 @@ namespace SquidEyes.TechAnalysis
                 lastCandle = candle;
                 lastValue = result;
 
-                return new DataPoint(candle.OpenOn, result);
+                return GetBasicResult(candle.OpenOn, result);
             }
         }
     }

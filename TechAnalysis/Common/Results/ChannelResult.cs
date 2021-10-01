@@ -22,15 +22,18 @@ using System;
 
 namespace SquidEyes.TechAnalysis
 {
-    public class DataPoint
+    public class ChannelResult : ResultBase
     {
-        internal DataPoint(DateTime openOn, double value)
+        public ChannelResult()
+            : base(ResultKind.ChannelResult)
         {
-            OpenOn = openOn;
-            Value = value;
         }
 
-        public DateTime OpenOn { get; }
-        public double Value { get; }
+        public double Upper { get; init; }
+        public double Middle { get; init; }
+        public double Lower { get; init; }
+
+        public override string ToString() =>
+            $"{OpenOn:MM/dd/yyyy HH:mm},{Upper},{Middle},{Lower}";
     }
 }

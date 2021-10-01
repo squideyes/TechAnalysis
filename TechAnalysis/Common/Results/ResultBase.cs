@@ -22,8 +22,15 @@ using System;
 
 namespace SquidEyes.TechAnalysis
 {
-    public abstract class ResultBase
+    public abstract class ResultBase : IResult
     {
-        public DateTime OpenOn { get; set; }
+        public ResultBase(ResultKind kind)
+        {
+            Kind = kind;
+        }
+
+        public ResultKind Kind { get; }
+
+        public DateTime OpenOn { get; init; }
     }
 }
