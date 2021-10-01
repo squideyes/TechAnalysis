@@ -8,7 +8,7 @@
     <Description>A collection of common technical analysis indicators</Description>
     <Copyright>Copyright 2021 by Louis S. Berman</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageTags>Trading;Technical Analysis;Indicators;Forex</PackageTags>
+    <PackageTags>Trading Technical-Analysis Indicators Futures Forex</PackageTags>
     <PackageReleaseNotes />
     <PackageProjectUrl>https://github.com/squideyes/TechAnalysis</PackageProjectUrl>
     <PackageId>SquidEyes.TechAnalysis</PackageId>

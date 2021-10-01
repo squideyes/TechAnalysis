@@ -1,3 +1,8 @@
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/squideyes/techanalysis/Deploy%20to%20NuGet?label=build)
+![NuGet Version](https://img.shields.io/nuget/v/SquidEyes.TechAnalysis)
+![Downloads](https://img.shields.io/nuget/dt/squideyes.techanalysis)
+![License](https://img.shields.io/github/license/squideyes/TechAnalysis)
+
 **SquidEyes.TechAnalysis** is a collection of high-performance C#/.NET 5.0 technical indicators with a hand-curated set of matching unit-tests.
 
 |Code|Name|Indicator|Kind|
@@ -54,6 +59,9 @@ foreach (var fields in new CsvEnumerator(CSV.ToStream(), 5))
         AddToChart(buffer[0].OpenOn, buffer[0].Value);
 }
 ```
+
+#
+Contributions are always welcome (see [CONTRIBUTING.md](https://github.com/squideyes/TechAnalysis/blob/master/CONTRIBUTING.md) for details)
 
 **Supper-Duper Extra-Important Caveat**:  THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 
