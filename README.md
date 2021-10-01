@@ -18,7 +18,7 @@
 |**TEMA**|Triple Exponential Moving Average|TemaIndicator|Moving Average|
 |**WMA**|Weighted Moving Average|WmaIndicator|Moving Average|
 
-To be clear, there are a good number of C#-based technical indicator libraries (i.e. <a href="https://github.com/karlwancl/Trady" target="_blank">Trady</a>, <a href="https://github.com/DaveSkender/Stock.Indicators" target="_blank">Stock Indicators</a>, <a href="https://github.com/hmG3/TA-Lib.NETCore" target="_blank">TA-Lib.NETCore</a>, and <a href="https://github.com/anilca/NetTrader.Indicator" target="_blank">NetTrader</a>, just to name a few), but the author found each of these to be objectionable for one or more reasons:
+To be clear, there are a good number of C#-based technical indicator libraries (i.e. [Trady](https://github.com/karlwancl/Trady), [Stock Indicators](https://github.com/DaveSkender/Stock.Indicators), [TA-Lib.NETCore](https://github.com/hmG3/TA-Lib.NETCore), and [NetTrader]( https://github.com/anilca/NetTrader.Indicator), just to name a few), but the author found each of these to be objectionable for one or more reasons:
 
 * Poor performance (whether from use of decimals or otherwise)
 * Poor standardization 
