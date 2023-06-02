@@ -1,22 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-
+    <TargetFramework>net7.0</TargetFramework>
     <IsPackable>false</IsPackable>
-
-    <AssemblyName>SquidEyes.UnitTests</AssemblyName>
-
-    <RootNamespace>SquidEyes.UnitTests</RootNamespace>
-
+	  <AssemblyName>SquidEyes.$(MSBuildProjectName)</AssemblyName>
+	  <RootNamespace>SquidEyes.$(MSBuildProjectName)</RootNamespace>
     <Authors>Louis S. Berman</Authors>
-
     <Description>A set of unit-tests related to the SquidEyes.TechAnalysis project</Description>
-
     <Copyright>Copyright 2021 by Louis S. Berman</Copyright>
-
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-
     <PackageProjectUrl>https://github.com/squideyes/TechAnalysis</PackageProjectUrl>
   </PropertyGroup>
 

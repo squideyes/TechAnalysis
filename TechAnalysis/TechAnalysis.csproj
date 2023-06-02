@@ -1,21 +1,33 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-    <AssemblyName>SquidEyes.TechAnalysis</AssemblyName>
-    <RootNamespace>SquidEyes.TechAnalysis</RootNamespace>
-    <Authors>Louis S. Berman</Authors>
-    <Description>A collection of common technical analysis indicators</Description>
-    <Copyright>Copyright 2021 by Louis S. Berman</Copyright>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageTags>Trading Technical-Analysis Indicators Futures Forex</PackageTags>
-    <PackageReleaseNotes />
-    <PackageProjectUrl>https://github.com/squideyes/TechAnalysis</PackageProjectUrl>
-    <PackageId>SquidEyes.TechAnalysis</PackageId>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/squideyes/TechAnalysis</RepositoryUrl>
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-  </PropertyGroup>
-  
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+		<AssemblyName>SquidEyes.$(MSBuildProjectName)</AssemblyName>
+		<RootNamespace>SquidEyes.$(MSBuildProjectName)</RootNamespace>
+		<Title>SquidEyes Tech-Analysis</Title>
+		<Authors>Louis S. Berman</Authors>
+		<Company>SquidEyes, LLC.</Company>
+		<Description>A collection of common technical analysis indicators</Description>
+		<Copyright>Copyright 2023 by SquidEyes, LLC.</Copyright>
+		<PackageId>SquidEyes.TechAnalysis</PackageId>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageTags>trading;technical-analysis;indicators;futures;forex</PackageTags>
+		<RepositoryType>git</RepositoryType>
+		<PackageIcon>Icon.jpg</PackageIcon>
+		<RepositoryUrl>https://github.com/squideyes/TechAnalysis</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/squideyes/TechAnalysis</PackageProjectUrl>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\README.md">
+		  <Pack>True</Pack>
+		  <PackagePath>\</PackagePath>
+		</None>
+		<None Include="Icon.jpg" Pack="true" PackagePath="" />
+	</ItemGroup>
+
 </Project>
