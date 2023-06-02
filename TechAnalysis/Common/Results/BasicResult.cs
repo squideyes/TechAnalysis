@@ -3,15 +3,14 @@
 // of the MIT License (https://opensource.org/licenses/MIT)
 // ********************************************************
 
-namespace SquidEyes.TechAnalysis
-{
-    public class BasicResult : ResultBase
-    {
-        internal BasicResult()
-            : base(ResultKind.BasicResult)
-        {
-        }
+namespace SquidEyes.TechAnalysis;
 
-        public double Value { get; init; }
+public class BasicResult : ResultBase
+{
+    internal BasicResult()
+        : base(ResultKind.BasicResult)
+    {
     }
+
+    public double Value { get; init; }
 }

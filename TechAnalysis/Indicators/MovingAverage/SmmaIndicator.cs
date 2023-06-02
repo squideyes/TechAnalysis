@@ -3,56 +3,53 @@
 // of the MIT License (https://opensource.org/licenses/MIT)
 // ********************************************************
 
-using System.Linq;
+namespace SquidEyes.TechAnalysis;
 
-namespace SquidEyes.TechAnalysis
+public class SmmaIndicator : BasicIndicatorBase, IBasicIndicator
 {
-    public class SmmaIndicator : BasicIndicatorBase, IBasicIndicator
+    private readonly SlidingBuffer<float> buffer;
+
+    private int index = 0;
+    private double lastSmma = 0;
+    private double sum = 0;
+    private double prevsum = 0;
+    private double prevsmma = 0;
+
+    public SmmaIndicator(int period, PriceToUse priceToUse = PriceToUse.Close)
+        : base(period, priceToUse, 2)
     {
-        private readonly SlidingBuffer<float> buffer;
+        buffer = new SlidingBuffer<float>(period);
+    }
 
-        private int index = 0;
-        private double lastSmma = 0;
-        private double sum = 0;
-        private double prevsum = 0;
-        private double prevsmma = 0;
+    public BasicResult AddAndCalc(ICandle candle)
+    {
+        var price = candle.GetPrice(PriceToUse);
 
-        public SmmaIndicator(int period, PriceToUse priceToUse)
-            : base(period, priceToUse, 2)
+        buffer.Add(price);
+
+        double smma;
+
+        if (index++ <= Period)
         {
-            buffer = new SlidingBuffer<float>(period);
+            sum = buffer.Sum();
+
+            lastSmma = sum / Period;
+
+            smma = lastSmma;
+        }
+        else
+        {
+            prevsum = sum;
+
+            prevsmma = lastSmma;
+
+            smma = (prevsum - prevsmma + price) / Period;
+
+            sum = prevsum - prevsmma + price;
+
+            lastSmma = (sum - prevsmma + price) / Period;
         }
 
-        public BasicResult AddAndCalc(ICandle candle)
-        {
-            var price = candle.GetPrice(PriceToUse);
-
-            buffer.Add(price);
-
-            double smma;
-
-            if (index++ <= Period)
-            {
-                sum = buffer.Sum();
-
-                lastSmma = sum / Period;
-
-                smma = lastSmma;
-            }
-            else
-            {
-                prevsum = sum;
-
-                prevsmma = lastSmma;
-
-                smma = (prevsum - prevsmma + price) / Period;
-
-                sum = prevsum - prevsmma + price;
-
-                lastSmma = (sum - prevsmma + price) / Period;
-            }
-
-            return GetBasicResult(candle.OpenOn, smma);
-        }
+        return GetBasicResult(candle.OpenOn, smma);
     }
 }

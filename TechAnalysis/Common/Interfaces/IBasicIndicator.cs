@@ -3,10 +3,9 @@
 // of the MIT License (https://opensource.org/licenses/MIT)
 // ********************************************************
 
-namespace SquidEyes.TechAnalysis
+namespace SquidEyes.TechAnalysis;
+
+public interface IBasicIndicator
 {
-    public interface IBasicIndicator
-    {
-        BasicResult AddAndCalc(ICandle candle);
-    }
+    BasicResult AddAndCalc(ICandle candle);
 }

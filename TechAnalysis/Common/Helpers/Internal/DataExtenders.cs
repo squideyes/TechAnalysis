@@ -3,27 +3,24 @@
 // of the MIT License (https://opensource.org/licenses/MIT)
 // ********************************************************
 
-using System;
+namespace SquidEyes.TechAnalysis;
 
-namespace SquidEyes.TechAnalysis
+public static class DataExtenders
 {
-    public static class DataExtenders
-    {
-        public static float GetPrice(this ICandle candle, PriceToUse priceToUse) => 
-            priceToUse switch
-            {
-                PriceToUse.Open => candle.Open,
-                PriceToUse.High => candle.High,
-                PriceToUse.Low => candle.Low,
-                PriceToUse.Close => candle.Close,
-                _ => throw new ArgumentOutOfRangeException(nameof(priceToUse))
-            };
+    public static float GetPrice(this ICandle candle, PriceToUse priceToUse) => 
+        priceToUse switch
+        {
+            PriceToUse.Open => candle.Open,
+            PriceToUse.High => candle.High,
+            PriceToUse.Low => candle.Low,
+            PriceToUse.Close => candle.Close,
+            _ => throw new ArgumentOutOfRangeException(nameof(priceToUse))
+        };
 
-        public static BasicResult ToBasicResult(this ICandle candle, PriceToUse priceToUse) =>
-            new()
-            {
-                OpenOn = candle.OpenOn,
-                Value = candle.GetPrice(priceToUse)
-            };
-    }
+    public static BasicResult ToBasicResult(this ICandle candle, PriceToUse priceToUse) =>
+        new()
+        {
+            OpenOn = candle.OpenOn,
+            Value = candle.GetPrice(priceToUse)
+        };
 }

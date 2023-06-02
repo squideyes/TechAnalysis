@@ -3,47 +3,44 @@
 // of the MIT License (https://opensource.org/licenses/MIT)
 // ********************************************************
 
-using System;
+namespace SquidEyes.TechAnalysis;
 
-namespace SquidEyes.TechAnalysis
+public class WmaIndicator : BasicIndicatorBase, IBasicIndicator
 {
-    public class WmaIndicator : BasicIndicatorBase, IBasicIndicator
+    private readonly SlidingBuffer<float> buffer;
+
+    private int index = 0;
+
+    private double priorSum;
+    private double priorWsum;
+
+    public WmaIndicator(int period, PriceToUse priceToUse = PriceToUse.Close)
+        : base(period, priceToUse, 2)
     {
-        private readonly SlidingBuffer<float> buffer;
+        buffer = new SlidingBuffer<float>(period + 1);
+    }
 
-        private int index = 0;
+    public BasicResult AddAndCalc(ICandle candle)
+    {
+        var price = candle.GetPrice(PriceToUse);
 
-        private double priorSum;
-        private double priorWsum;
+        buffer.Add(price);
 
-        public WmaIndicator(int period, PriceToUse priceToUse)
-            : base(period, priceToUse, 2)
-        {
-            buffer = new SlidingBuffer<float>(period + 1);
-        }
+        var factor = Math.Min(index + 1, Period);
 
-        public BasicResult AddAndCalc(ICandle candle)
-        {
-            var price = candle.GetPrice(PriceToUse);
+        var wsum = priorWsum -
+            (index >= Period ? priorSum : 0.0) + factor * price;
 
-            buffer.Add(price);
+        var sum = priorSum + price -
+            (index >= Period ? buffer[0] : 0.0);
 
-            var factor = Math.Min(index + 1, Period);
+        var wma = wsum / (0.5 * factor * (factor + 1));
 
-            var wsum = priorWsum -
-                (index >= Period ? priorSum : 0.0) + factor * price;
+        index++;
 
-            var sum = priorSum + price -
-                (index >= Period ? buffer[0] : 0.0);
+        priorWsum = wsum;
+        priorSum = sum;
 
-            var wma = wsum / (0.5 * factor * (factor + 1));
-
-            index++;
-
-            priorWsum = wsum;
-            priorSum = sum;
-
-            return GetBasicResult(candle.OpenOn, wma);
-        }
+        return GetBasicResult(candle.OpenOn, wma);
     }
 }

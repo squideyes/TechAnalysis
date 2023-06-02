@@ -3,17 +3,16 @@
 // of the MIT License (https://opensource.org/licenses/MIT)
 // ********************************************************
 
-namespace SquidEyes.TechAnalysis
-{
-    public class MacdResult : ResultBase
-    {
-        public MacdResult()
-            : base(ResultKind.MacdResult)
-        {
-        }
+namespace SquidEyes.TechAnalysis;
 
-        public double Value { get; init; }
-        public double Average { get; init; }
-        public double Difference { get; init; }
+public class MacdResult : ResultBase
+{
+    public MacdResult()
+        : base(ResultKind.MacdResult)
+    {
     }
+
+    public double Value { get; init; }
+    public double Average { get; init; }
+    public double Difference { get; init; }
 }

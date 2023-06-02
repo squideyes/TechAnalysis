@@ -3,48 +3,45 @@
 // of the MIT License (https://opensource.org/licenses/MIT)
 // ********************************************************
 
-using System;
+namespace SquidEyes.TechAnalysis;
 
-namespace SquidEyes.TechAnalysis
+public class AtrIndicator : BasicIndicatorBase, IBasicIndicator
 {
-    public class AtrIndicator : BasicIndicatorBase, IBasicIndicator
+    private int index = 0;
+    private double lastValue = 0.0;
+    private ICandle lastCandle = null!;
+
+    public AtrIndicator(int period, PriceToUse priceToUse = PriceToUse.Close)
+        : base(period, priceToUse, 2)
     {
-        private int index = 0;
-        private double lastValue = 0.0;
-        private ICandle lastCandle = null;
+    }
 
-        public AtrIndicator(int period, PriceToUse priceToUse)
-            : base(period, priceToUse, 2)
+    public BasicResult AddAndCalc(ICandle candle)
+    {
+        double high0 = candle.High;
+        double low0 = candle.Low;
+
+        if (index++ == 0)
         {
+            lastCandle = candle;
+            lastValue = high0 - low0;
+
+            return GetBasicResult(candle.OpenOn, lastValue);
         }
-
-        public BasicResult AddAndCalc(ICandle candle)
+        else
         {
-            double high0 = candle.High;
-            double low0 = candle.Low;
+            double close1 = lastCandle.Close;
 
-            if (index++ == 0)
-            {
-                lastCandle = candle;
-                lastValue = high0 - low0;
+            var trueRange = Math.Max(Math.Abs(low0 - close1),
+                Math.Max(high0 - low0, Math.Abs(high0 - close1)));
 
-                return GetBasicResult(candle.OpenOn, lastValue);
-            }
-            else
-            {
-                double close1 = lastCandle.Close;
+            var result = ((Math.Min(index, Period) - 1) * lastValue + trueRange) /
+                Math.Min(index, Period);
 
-                var trueRange = Math.Max(Math.Abs(low0 - close1),
-                    Math.Max(high0 - low0, Math.Abs(high0 - close1)));
+            lastCandle = candle;
+            lastValue = result;
 
-                var result = ((Math.Min(index, Period) - 1) * lastValue + trueRange) /
-                    Math.Min(index, Period);
-
-                lastCandle = candle;
-                lastValue = result;
-
-                return GetBasicResult(candle.OpenOn, result);
-            }
+            return GetBasicResult(candle.OpenOn, result);
         }
     }
 }

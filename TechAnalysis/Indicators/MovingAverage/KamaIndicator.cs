@@ -3,61 +3,58 @@
 // of the MIT License (https://opensource.org/licenses/MIT)
 // ********************************************************
 
-using System;
-using System.Linq;
+namespace SquidEyes.TechAnalysis;
 
-namespace SquidEyes.TechAnalysis
+public class KamaIndicator : BasicIndicatorBase, IBasicIndicator
 {
-    public class KamaIndicator : BasicIndicatorBase, IBasicIndicator
+    private readonly double fastCF;
+    private readonly double slowCF;
+    private readonly SlidingBuffer<double> diffs;
+    private readonly SlidingBuffer<double> values;
+
+    private double lastResult = 0;
+
+    private int index = 0;
+
+    public KamaIndicator(int period, int fast, int slow, 
+        PriceToUse priceToUse = PriceToUse.Close)
+        : base(period, priceToUse, 2)
     {
-        private readonly double fastCF;
-        private readonly double slowCF;
-        private readonly SlidingBuffer<double> diffs;
-        private readonly SlidingBuffer<double> values;
+        fastCF = 2.0 / (fast + 1);
+        slowCF = 2.0 / (slow + 1);
 
-        private double lastResult = 0;
+        diffs = new SlidingBuffer<double>(period + 1, true);
+        values = new SlidingBuffer<double>(period + 1, true);
+    }
 
-        private int index = 0;
+    public BasicResult AddAndCalc(ICandle candle)
+    {
+        var dataPoint = candle.ToBasicResult(PriceToUse);
 
-        public KamaIndicator(int period, int fast, int slow, PriceToUse priceToUse)
-            : base(period, priceToUse, 2)
+        BasicResult UpdateIndexAndLastResultThenGetResult(double value)
         {
-            fastCF = 2.0 / (fast + 1);
-            slowCF = 2.0 / (slow + 1);
+            index++;
 
-            diffs = new SlidingBuffer<double>(period + 1, true);
-            values = new SlidingBuffer<double>(period + 1, true);
+            return GetBasicResult(candle.OpenOn, lastResult = value);
         }
 
-        public BasicResult AddAndCalc(ICandle candle)
-        {
-            var dataPoint = candle.ToBasicResult(PriceToUse);
+        values.Add(dataPoint.Value);
 
-            BasicResult UpdateIndexAndLastResultThenGetResult(double value)
-            {
-                index++;
+        diffs.Add(index > 0 ? Math.Abs(dataPoint.Value - values[1]) : dataPoint.Value);
 
-                return GetBasicResult(candle.OpenOn, lastResult = value);
-            }
+        if (index < Period)
+            return UpdateIndexAndLastResultThenGetResult(dataPoint.Value);
 
-            values.Add(dataPoint.Value);
+        var signal = Math.Abs(dataPoint.Value - values[Period]);
 
-            diffs.Add(index > 0 ? Math.Abs(dataPoint.Value - values[1]) : dataPoint.Value);
+        var noise = diffs.Take(Period).Sum();
 
-            if (index < Period)
-                return UpdateIndexAndLastResultThenGetResult(dataPoint.Value);
+        if (noise == 0.0)
+            return UpdateIndexAndLastResultThenGetResult(dataPoint.Value);
 
-            var signal = Math.Abs(dataPoint.Value - values[Period]);
+        var result = lastResult + Math.Pow(signal / noise *
+            (fastCF - slowCF) + slowCF, 2) * (dataPoint.Value - lastResult);
 
-            var noise = diffs.Take(Period).Sum();
-
-            if (noise == 0.0)
-                return UpdateIndexAndLastResultThenGetResult(dataPoint.Value);
-
-            var result = lastResult + Math.Pow(signal / noise *
-                (fastCF - slowCF) + slowCF, 2) * (dataPoint.Value - lastResult);
-
-            return UpdateIndexAndLastResultThenGetResult(result);
-        }
+        return UpdateIndexAndLastResultThenGetResult(result);
     }
 }

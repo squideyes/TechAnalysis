@@ -3,22 +3,19 @@
 // of the MIT License (https://opensource.org/licenses/MIT)
 // ********************************************************
 
-using System;
+namespace SquidEyes.TechAnalysis;
 
-namespace SquidEyes.TechAnalysis
+public class ChannelResult : ResultBase
 {
-    public class ChannelResult : ResultBase
+    public ChannelResult()
+        : base(ResultKind.ChannelResult)
     {
-        public ChannelResult()
-            : base(ResultKind.ChannelResult)
-        {
-        }
-
-        public double Upper { get; init; }
-        public double Middle { get; init; }
-        public double Lower { get; init; }
-
-        public override string ToString() =>
-            $"{OpenOn:MM/dd/yyyy HH:mm},{Upper},{Middle},{Lower}";
     }
+
+    public double Upper { get; init; }
+    public double Middle { get; init; }
+    public double Lower { get; init; }
+
+    public override string ToString() =>
+        $"{OpenOn:MM/dd/yyyy HH:mm},{Upper},{Middle},{Lower}";
 }

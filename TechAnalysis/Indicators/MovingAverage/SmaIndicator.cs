@@ -3,40 +3,37 @@
 // of the MIT License (https://opensource.org/licenses/MIT)
 // ********************************************************
 
-using System;
+namespace SquidEyes.TechAnalysis;
 
-namespace SquidEyes.TechAnalysis
+public class SmaIndicator : BasicIndicatorBase, IBasicIndicator
 {
-    public class SmaIndicator : BasicIndicatorBase, IBasicIndicator
+    private readonly SlidingBuffer<double> buffer;
+
+    private int index = 0;
+    private double sum = 0;
+    private double priorSum = 0;
+
+    public SmaIndicator(int period, PriceToUse priceToUse = PriceToUse.Close)
+        : base(period, priceToUse, 2)
     {
-        private readonly SlidingBuffer<double> buffer;
+        buffer = new SlidingBuffer<double>(period + 1);
+    }
 
-        private int index = 0;
-        private double sum = 0;
-        private double priorSum = 0;
+    public BasicResult AddAndCalc(ICandle candle) =>
+        AddAndCalc(candle.OpenOn, candle.GetPrice(PriceToUse));
 
-        public SmaIndicator(int period, PriceToUse priceToUse)
-            : base(period, priceToUse, 2)
-        {
-            buffer = new SlidingBuffer<double>(period + 1);
-        }
+    public BasicResult AddAndCalc(DateTime openOn, double price)
+    {
+        buffer.Add(price);
 
-        public BasicResult AddAndCalc(ICandle candle) =>
-            AddAndCalc(candle.OpenOn, candle.GetPrice(PriceToUse));
+        sum = priorSum + price - (index >= Period ? buffer[0] : 0);
 
-        public BasicResult AddAndCalc(DateTime openOn, double price)
-        {
-            buffer.Add(price);
+        var sma = sum / (index < Period ? index + 1 : Period);
 
-            sum = priorSum + price - (index >= Period ? buffer[0] : 0);
+        priorSum = sum;
 
-            var sma = sum / (index < Period ? index + 1 : Period);
+        index++;
 
-            priorSum = sum;
-
-            index++;
-
-            return GetBasicResult(openOn, sma);
-        }
+        return GetBasicResult(openOn, sma);
     }
 }

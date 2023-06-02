@@ -3,12 +3,9 @@
 // of the MIT License (https://opensource.org/licenses/MIT)
 // ********************************************************
 
-using System;
+namespace SquidEyes.TechAnalysis;
 
-namespace SquidEyes.TechAnalysis
+public interface IResult
 {
-    public interface IResult
-    {
-        public DateTime OpenOn { get; }
-    }
+    public DateTime OpenOn { get; }
 }

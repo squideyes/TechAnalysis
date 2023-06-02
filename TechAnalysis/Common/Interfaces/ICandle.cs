@@ -3,16 +3,13 @@
 // of the MIT License (https://opensource.org/licenses/MIT)
 // ********************************************************
 
-using System;
+namespace SquidEyes.TechAnalysis;
 
-namespace SquidEyes.TechAnalysis
+public interface ICandle
 {
-    public interface ICandle
-    {
-        DateTime OpenOn { get; }
-        float Open { get; }
-        float High { get; }
-        float Low { get; }
-        float Close { get; }
-    }
+    DateTime OpenOn { get; }
+    float Open { get; }
+    float High { get; }
+    float Low { get; }
+    float Close { get; }
 }

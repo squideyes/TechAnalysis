@@ -3,13 +3,12 @@
 // of the MIT License (https://opensource.org/licenses/MIT)
 // ********************************************************
 
-namespace SquidEyes.TechAnalysis
+namespace SquidEyes.TechAnalysis;
+
+public enum PriceToUse
 {
-    public enum PriceToUse
-    {
-        Open = 1,
-        High, 
-        Low, 
-        Close
-    }
+    Open = 1,
+    High, 
+    Low, 
+    Close
 }

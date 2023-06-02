@@ -1,9 +1,8 @@
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/squideyes/techanalysis/Deploy%20to%20NuGet?label=build)
 ![NuGet Version](https://img.shields.io/nuget/v/SquidEyes.TechAnalysis)
 ![Downloads](https://img.shields.io/nuget/dt/squideyes.techanalysis)
 ![License](https://img.shields.io/github/license/squideyes/TechAnalysis)
 
-**SquidEyes.TechAnalysis** is a collection of high-performance C#/.NET 5.0 technical indicators with a hand-curated set of matching unit-tests.
+**SquidEyes.TechAnalysis** is a collection of high-performance C#/.NET 7.0 technical indicators with a hand-curated set of matching unit-tests.
 
 |Code|Name|Indicator|Kind|
 |---|---|---|---|
