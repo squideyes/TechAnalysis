@@ -7,5 +7,7 @@ namespace SquidEyes.TechAnalysis;
 
 public interface IBasicIndicator
 {
+    BasicResult this[int index] { get; }
+
     BasicResult AddAndCalc(ICandle candle);
 }

@@ -14,5 +14,5 @@ public abstract class ResultBase : IResult
 
     public ResultKind Kind { get; }
 
-    public DateTime OpenOn { get; init; }
+    public DateTime CloseOn { get; init; }
 }

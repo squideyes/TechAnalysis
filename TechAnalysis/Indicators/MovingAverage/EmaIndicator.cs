@@ -11,8 +11,9 @@ public class EmaIndicator : BasicIndicatorBase, IBasicIndicator
     private readonly double constant2;
     private double? lastEma;
 
-    public EmaIndicator(int period, PriceToUse priceToUse = PriceToUse.Close)
-        : base(period, priceToUse, 2)
+    public EmaIndicator(int period, 
+        PriceToUse priceToUse = PriceToUse.Close, int maxResults = 10)
+        : base(period, priceToUse, maxResults)
     {
         constant1 = 2.0 / (1 + period);
         constant2 = 1.0 - (2.0 / (1 + period));
@@ -28,6 +29,6 @@ public class EmaIndicator : BasicIndicatorBase, IBasicIndicator
 
         lastEma = ema;
 
-        return GetBasicResult(result.OpenOn, ema.Value);
+        return GetBasicResult(result.CloseOn, ema.Value);
     }
 }

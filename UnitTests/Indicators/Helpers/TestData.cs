@@ -1608,7 +1608,7 @@ internal static class TestData
     {
         return new TestCandle()
         {
-            OpenOn = new DateTime(2021, 3, 30, hour, minute, 0),
+            CloseOn = new DateTime(2021, 3, 30, hour, minute, 0),
             Open = open,
             High = high,
             Low = low,

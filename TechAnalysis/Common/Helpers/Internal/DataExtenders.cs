@@ -20,7 +20,7 @@ public static class DataExtenders
     public static BasicResult ToBasicResult(this ICandle candle, PriceToUse priceToUse) =>
         new()
         {
-            OpenOn = candle.OpenOn,
+            CloseOn = candle.CloseOn,
             Value = candle.GetPrice(priceToUse)
         };
 }

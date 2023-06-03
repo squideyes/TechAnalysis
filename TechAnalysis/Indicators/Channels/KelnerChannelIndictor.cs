@@ -13,35 +13,35 @@ public class KeltnerChannelIndictor : BasicIndicatorBase
     private readonly SlidingBuffer<double> diff;
     private readonly SlidingBuffer<double> typical;
 
-    public KeltnerChannelIndictor(int period, 
-        PriceToUse priceToUse = PriceToUse.Close, double offsetMultiplier = 1.5)
-        : base(period, priceToUse, 2)
+    public KeltnerChannelIndictor(int period, PriceToUse priceToUse = PriceToUse.Close, 
+        int maxResults = 10, double offsetMultiplier = 1.5)
+        : base(period, priceToUse, maxResults)
     {
         this.offsetMultiplier = offsetMultiplier
-            .Validated(nameof(offsetMultiplier), v => v.InRange(0.5, 5.0));
+            .Validated(v => v.IsBetween(0.5, 5.0));
 
         diff = new SlidingBuffer<double>(period, true);
         typical = new SlidingBuffer<double>(period, true);
-        smaDiff = new SmaIndicator(period, priceToUse);
-        smaTypical = new SmaIndicator(period, priceToUse);
+        smaDiff = new SmaIndicator(period, priceToUse, 2);
+        smaTypical = new SmaIndicator(period, priceToUse, 2);
     }
 
     public ChannelResult AddAndCalc(ICandle candle)
     {
         diff.Add(candle.High - candle.Low);
 
-        typical.Add(candle.Funcify(c => (c.High + c.Low + c.Close) / 3.0));
+        typical.Add(candle.Convert(c => (c.High + c.Low + c.Close) / 3.0));
 
         var middle = smaTypical.AddAndCalc(
-            candle.OpenOn, typical[0]).Value;
+            candle.CloseOn, typical[0]).Value;
 
-        var x = smaDiff.AddAndCalc(candle.OpenOn, diff[0]).Value;
+        var x = smaDiff.AddAndCalc(candle.CloseOn, diff[0]).Value;
 
         var offset = x * offsetMultiplier;
 
         return new ChannelResult()
         {
-            OpenOn = candle.OpenOn,
+            CloseOn = candle.CloseOn,
             Upper = middle + offset,
             Middle = middle,
             Lower = middle - offset

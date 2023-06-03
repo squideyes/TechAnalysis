@@ -12,10 +12,11 @@ public class CciIndicator : BasicIndicatorBase, IBasicIndicator
 
     private int barCount = 0;
 
-    public CciIndicator(int period, PriceToUse priceToUse = PriceToUse.Close)
-        : base(period, priceToUse, 2)
+    public CciIndicator(int period, 
+        PriceToUse priceToUse = PriceToUse.Close, int maxResults = 10)
+        : base(period, priceToUse, maxResults)
     {
-        sma = new SmaIndicator(Period, priceToUse);
+        sma = new SmaIndicator(Period, priceToUse, 2);
 
         typical = new SlidingBuffer<double>(period, true);
     }
@@ -24,9 +25,9 @@ public class CciIndicator : BasicIndicatorBase, IBasicIndicator
     {
         double result;
 
-        typical.Add(candle.Funcify(c => (c.High + c.Low + c.Close) / 3.0));
+        typical.Add(candle.Convert(c => (c.High + c.Low + c.Close) / 3.0));
 
-        var sma0 = sma.AddAndCalc(candle.OpenOn, typical[0]).Value;
+        var sma0 = sma.AddAndCalc(candle.CloseOn, typical[0]).Value;
 
         if (barCount == 0)
         {
@@ -45,6 +46,6 @@ public class CciIndicator : BasicIndicatorBase, IBasicIndicator
 
         barCount++;
 
-        return GetBasicResult(candle.OpenOn, result);
+        return GetBasicResult(candle.CloseOn, result);
     }
 }

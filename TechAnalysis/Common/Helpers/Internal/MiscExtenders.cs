@@ -3,7 +3,7 @@
 // of the MIT License (https://opensource.org/licenses/MIT)
 // ********************************************************
 
-using System.Text;
+using System.Runtime.CompilerServices;
 
 namespace SquidEyes.TechAnalysis;
 
@@ -14,7 +14,7 @@ internal static class MiscExtenders
     public static bool Approximates(this double a, double b) =>
         Math.Abs(a - b) < DOUBLE_EPSILON;
 
-    public static int ToDecimalDigits(this double value)
+    public static int ToDigits(this double value)
     {
         var digits = 0;
 
@@ -30,26 +30,11 @@ internal static class MiscExtenders
             action(item);
     }
 
-    public static Stream ToStream(this string value)
-    {
-        var stream = new MemoryStream();
+    public static bool IsEnumValue<T>(this T value)
+        where T : struct, Enum => Enum.IsDefined(value);
 
-        var writer = new StreamWriter(stream, Encoding.UTF8, -1, true);
-
-        writer.Write(value);
-
-        writer.Flush();
-
-        stream.Position = 0;
-
-        return stream;
-    }
-
-    public static bool IsEnumValue<T>(this T value) where T : struct, Enum =>
-        Enum.IsDefined(value);
-
-    public static T Validated<T>(
-        this T value, string fieldName, Func<T, bool> isValid)
+    public static T Validated<T>(this T value, 
+        Func<T, bool> isValid, [CallerMemberName] string fieldName = "")
     {
         if (string.IsNullOrWhiteSpace(fieldName))
             throw new ArgumentNullException(nameof(fieldName));
@@ -60,7 +45,7 @@ internal static class MiscExtenders
             throw new ArgumentOutOfRangeException(fieldName);
     }
 
-    public static bool InRange<T>(
+    public static bool IsBetween<T>(
         this T value, T minValue, T maxValue, bool inclusive = true)
         where T : IComparable<T>
     {
@@ -78,5 +63,5 @@ internal static class MiscExtenders
         return true;
     }
 
-    public static R Funcify<T, R>(this T value, Func<T, R> func) => func(value);
+    public static R Convert<T, R>(this T value, Func<T, R> func) => func(value);
 }

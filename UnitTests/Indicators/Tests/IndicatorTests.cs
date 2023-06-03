@@ -16,7 +16,7 @@ public class IndicatorTests
     [Fact]
     public void KeltnerChannelIndicatorShouldMatchBaseline()
     {
-        var indicator = new KeltnerChannelIndictor(20, PriceToUse.Close, 1.5);
+        var indicator = new KeltnerChannelIndictor(20, PriceToUse.Close, 2, 1.5);
 
         foreach (var baseline in GetKeltnerChannelBaselines())
         {
@@ -36,7 +36,7 @@ public class IndicatorTests
     [Fact]
     public void BollingerBandsIndicatorShouldMatchBaseline()
     {
-        var indicator = new BollingerBandsIndictor(10, PriceToUse.Close, 2.0);
+        var indicator = new BollingerBandsIndictor(10, PriceToUse.Close, 2, 2.0);
 
         foreach (var baseline in GetBollingerBandsBaselines())
         {
@@ -56,7 +56,7 @@ public class IndicatorTests
     [Fact]
     public void MacdIndicatorShouldMatchBaseline()
     {
-        var indicator = new MacdIndicator(10, 15, 3, PriceToUse.Close);
+        var indicator = new MacdIndicator(10, 15, 3, PriceToUse.Close, 10);
 
         foreach (var baseline in GetMacdBaselines())
         {
@@ -75,47 +75,47 @@ public class IndicatorTests
 
     [Fact]
     public void AtrIndicatorShouldMatchBaseline() => BasicIndicatorBaselineTest(
-        new AtrIndicator(10, PriceToUse.Close), GetAtrBaselines());
+        new AtrIndicator(10, PriceToUse.Close, 2), GetAtrBaselines());
 
     [Fact]
     public void CciIndicatorShouldMatchBaseline() => BasicIndicatorBaselineTest(
-        new CciIndicator(20, PriceToUse.Close), GetCciBaselines());
+        new CciIndicator(20, PriceToUse.Close, 2), GetCciBaselines());
 
     [Fact]
     public void DemaIndicatorShouldMatchBaseline() => BasicIndicatorBaselineTest(
-        new DemaIndicator(10, PriceToUse.Close), GetDemaBaselines());
+        new DemaIndicator(10, PriceToUse.Close, 2), GetDemaBaselines());
 
     [Fact]
     public void EmaIndicatorShouldMatchBaseline() => BasicIndicatorBaselineTest(
-        new EmaIndicator(10, PriceToUse.Close), GetEmaBaselines());
+        new EmaIndicator(10, PriceToUse.Close, 2), GetEmaBaselines());
 
     [Fact]
     public void SmaIndicatorShouldMatchBaseline() => BasicIndicatorBaselineTest(
-        new SmaIndicator(10, PriceToUse.Close), GetSmaBaselines());
+        new SmaIndicator(10, PriceToUse.Close, 2), GetSmaBaselines());
 
     [Fact]
     public void TemaIndicatorShouldMatchBaseline() => BasicIndicatorBaselineTest(
-        new TemaIndicator(10, PriceToUse.Close), GetTemaBaselines());
+        new TemaIndicator(10, PriceToUse.Close, 2), GetTemaBaselines());
 
     [Fact]
     public void WmaIndicatorShouldMatchBaseline() => BasicIndicatorBaselineTest(
-        new WmaIndicator(10, PriceToUse.Close), GetWmaBaselines());
+        new WmaIndicator(10, PriceToUse.Close, 2), GetWmaBaselines());
 
     [Fact]
     public void LinRegIndicatorShouldMatchBaseline() => BasicIndicatorBaselineTest(
-        new LinRegIndicator(10, PriceToUse.Close), GetLinRegBaselines());
+        new LinRegIndicator(10, PriceToUse.Close, 2), GetLinRegBaselines());
 
     [Fact]
     public void StdDevIndicatorShouldMatchBaseline() => BasicIndicatorBaselineTest(
-        new StdDevIndicator(10, PriceToUse.Close), GetStdDevBaselines());
+        new StdDevIndicator(10, PriceToUse.Close, 2), GetStdDevBaselines());
 
     [Fact]
     public void KamaIndicatorShouldMatchBaseline() => BasicIndicatorBaselineTest(
-        new KamaIndicator(10, 5, 15, PriceToUse.Close), GetKamaBaselines());
+        new KamaIndicator(10, 5, 15, PriceToUse.Close, 2), GetKamaBaselines());
 
     [Fact]
     public void SmmaIndicatorShouldMatchBaseline() => BasicIndicatorBaselineTest(
-        new SmmaIndicator(10, PriceToUse.Close), GetSmmaBaselines());
+        new SmmaIndicator(10, PriceToUse.Close, 2), GetSmmaBaselines());
 
     [Fact]
     public void StochasticsIndicatorShouldMatchBaseline()
@@ -149,11 +149,14 @@ public class IndicatorTests
         {
             var result = indicator.AddAndCalc(baseline.Candle);
 
+            if (result != indicator[0])
+                throw new ArgumentOutOfRangeException(nameof(result));
+
             if (!IsGoodCalc(result.Value, baseline.Value))
                 throw new ArgumentOutOfRangeException(nameof(result));
         }
     }
 
     private static bool IsGoodCalc(double actual, double expected) =>
-        Math.Round(actual, expected.ToDecimalDigits()) == expected;
+        Math.Round(actual, expected.ToDigits()) == expected;
 }

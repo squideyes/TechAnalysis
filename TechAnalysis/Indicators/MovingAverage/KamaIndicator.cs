@@ -16,15 +16,16 @@ public class KamaIndicator : BasicIndicatorBase, IBasicIndicator
 
     private int index = 0;
 
-    public KamaIndicator(int period, int fast, int slow, 
-        PriceToUse priceToUse = PriceToUse.Close)
-        : base(period, priceToUse, 2)
+    public KamaIndicator(int period, int fast, int slow,
+        PriceToUse priceToUse = PriceToUse.Close, int maxResults = 10)
+        : base(period, priceToUse, maxResults)
     {
         fastCF = 2.0 / (fast + 1);
         slowCF = 2.0 / (slow + 1);
 
-        diffs = new SlidingBuffer<double>(period + 1, true);
-        values = new SlidingBuffer<double>(period + 1, true);
+        diffs = new SlidingBuffer<double>(period + 2, true);
+
+        values = new SlidingBuffer<double>(period + 2, true);
     }
 
     public BasicResult AddAndCalc(ICandle candle)
@@ -35,7 +36,7 @@ public class KamaIndicator : BasicIndicatorBase, IBasicIndicator
         {
             index++;
 
-            return GetBasicResult(candle.OpenOn, lastResult = value);
+            return GetBasicResult(candle.CloseOn, lastResult = value);
         }
 
         values.Add(dataPoint.Value);

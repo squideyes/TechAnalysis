@@ -14,8 +14,9 @@ public class WmaIndicator : BasicIndicatorBase, IBasicIndicator
     private double priorSum;
     private double priorWsum;
 
-    public WmaIndicator(int period, PriceToUse priceToUse = PriceToUse.Close)
-        : base(period, priceToUse, 2)
+    public WmaIndicator(int period, 
+        PriceToUse priceToUse = PriceToUse.Close, int maxResults = 10)
+        : base(period, priceToUse, maxResults)
     {
         buffer = new SlidingBuffer<float>(period + 1);
     }
@@ -41,6 +42,6 @@ public class WmaIndicator : BasicIndicatorBase, IBasicIndicator
         priorWsum = wsum;
         priorSum = sum;
 
-        return GetBasicResult(candle.OpenOn, wma);
+        return GetBasicResult(candle.CloseOn, wma);
     }
 }

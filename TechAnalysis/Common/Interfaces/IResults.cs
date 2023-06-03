@@ -7,5 +7,5 @@ namespace SquidEyes.TechAnalysis;
 
 public interface IResult
 {
-    public DateTime OpenOn { get; }
+    public DateTime CloseOn { get; }
 }

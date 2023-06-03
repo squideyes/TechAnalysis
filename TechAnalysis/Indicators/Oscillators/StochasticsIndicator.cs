@@ -7,22 +7,31 @@ namespace SquidEyes.TechAnalysis;
 
 public class StochasticsIndicator
 {
+    private readonly SlidingBuffer<StochasticsResult> results;
     private readonly SlidingBuffer<ICandle> candles;
     private readonly SlidingBuffer<(DateTime OpenOn, double Value)> fastK;
     private readonly int periodK;
     private readonly int periodD;
     private readonly int smooth;
 
-    public StochasticsIndicator(int periodK, int periodD, int smooth)
+    public StochasticsIndicator(
+        int periodK, int periodD, int smooth, int maxResults = 10)
     {
-        this.periodK = periodK.Validated(nameof(periodK), v => v >= 2);
-        this.periodD = periodD.Validated(nameof(periodD), v => v >= 2);
-        this.smooth = smooth.Validated(nameof(smooth), v => v >= 1);
+        this.periodK = periodK.Validated(v => v >= 2);
+
+        this.periodD = periodD.Validated(v => v >= 2);
+        
+        this.smooth = smooth.Validated(v => v >= 1);
 
         candles = new SlidingBuffer<ICandle>(this.periodK, true);
 
         fastK = new SlidingBuffer<(DateTime, double)>(this.periodK, true);
+        
+        results = new SlidingBuffer<StochasticsResult>(
+            maxResults.Validated(v => v >= 2), true);
     }
+
+    public StochasticsResult this[int index] => results[index];
 
     public bool IsPrimed => candles.IsPrimed;
 
@@ -35,7 +44,11 @@ public class StochasticsIndicator
 
         fastK.Add(GetFastK());
 
-        return GetStochasticsResult(candle);
+        var result = GetStochasticsResult(candle);
+
+        results.Add(result);
+
+        return result;
     }
 
     public StochasticsResult UpdateAndCalc(ICandle candle)
@@ -47,13 +60,17 @@ public class StochasticsIndicator
 
         fastK.Update(GetFastK());
 
-        return GetStochasticsResult(candle);
+        var result = GetStochasticsResult(candle);
+
+        results.Update(result);
+
+        return result;
     }
 
     private StochasticsResult GetStochasticsResult(ICandle candle)
     {
-        var smaFastK = new SmaIndicator(smooth, PriceToUse.Close);
-        var smaK = new SmaIndicator(periodD, PriceToUse.Close);
+        var smaFastK = new SmaIndicator(smooth, PriceToUse.Close, 2);
+        var smaK = new SmaIndicator(periodD, PriceToUse.Close, 2);
 
         double k = 0;
         double d = 0;
@@ -66,7 +83,7 @@ public class StochasticsIndicator
 
         return new StochasticsResult
         {
-            OpenOn = candle.OpenOn,
+            CloseOn = candle.CloseOn,
             K = k,
             D = d
         };
@@ -74,7 +91,7 @@ public class StochasticsIndicator
 
     private (DateTime, double) GetFastK()
     {
-        var openOn = candles[0].OpenOn;
+        var openOn = candles[0].CloseOn;
         var close = candles[0].Close;
         var low = candles.Select(c => c.Low).Min();
         var high = candles.Select(c => c.High).Max();

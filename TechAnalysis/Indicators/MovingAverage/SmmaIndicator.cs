@@ -15,8 +15,9 @@ public class SmmaIndicator : BasicIndicatorBase, IBasicIndicator
     private double prevsum = 0;
     private double prevsmma = 0;
 
-    public SmmaIndicator(int period, PriceToUse priceToUse = PriceToUse.Close)
-        : base(period, priceToUse, 2)
+    public SmmaIndicator(int period, 
+        PriceToUse priceToUse = PriceToUse.Close, int maxResults = 10)
+        : base(period, priceToUse, maxResults)
     {
         buffer = new SlidingBuffer<float>(period);
     }
@@ -50,6 +51,6 @@ public class SmmaIndicator : BasicIndicatorBase, IBasicIndicator
             lastSmma = (sum - prevsmma + price) / Period;
         }
 
-        return GetBasicResult(candle.OpenOn, smma);
+        return GetBasicResult(candle.CloseOn, smma);
     }
 }

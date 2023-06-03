@@ -13,14 +13,15 @@ public class SmaIndicator : BasicIndicatorBase, IBasicIndicator
     private double sum = 0;
     private double priorSum = 0;
 
-    public SmaIndicator(int period, PriceToUse priceToUse = PriceToUse.Close)
-        : base(period, priceToUse, 2)
+    public SmaIndicator(int period, 
+        PriceToUse priceToUse = PriceToUse.Close, int maxResults = 10)
+        : base(period, priceToUse, maxResults)
     {
         buffer = new SlidingBuffer<double>(period + 1);
     }
 
     public BasicResult AddAndCalc(ICandle candle) =>
-        AddAndCalc(candle.OpenOn, candle.GetPrice(PriceToUse));
+        AddAndCalc(candle.CloseOn, candle.GetPrice(PriceToUse));
 
     public BasicResult AddAndCalc(DateTime openOn, double price)
     {

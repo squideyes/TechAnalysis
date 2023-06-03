@@ -17,5 +17,5 @@ public class ChannelResult : ResultBase
     public double Lower { get; init; }
 
     public override string ToString() =>
-        $"{OpenOn:MM/dd/yyyy HH:mm},{Upper},{Middle},{Lower}";
+        $"{CloseOn:MM/dd/yyyy HH:mm},{Upper},{Middle},{Lower}";
 }

@@ -22,8 +22,9 @@ public class LinRegIndicator : BasicIndicatorBase, IBasicIndicator
     private double sumXY = 0.0;
     private double sumY = 0.0;
 
-    public LinRegIndicator(int period, PriceToUse priceToUse = PriceToUse.Close)
-        : base(period, priceToUse, 2)
+    public LinRegIndicator(int period,
+        PriceToUse priceToUse = PriceToUse.Close, int maxResults = 10)
+        : base(period, priceToUse, maxResults)
     {
         values = new SlidingBuffer<double>(period + 1);
     }
@@ -56,14 +57,10 @@ public class LinRegIndicator : BasicIndicatorBase, IBasicIndicator
 
         intercept = (values.TakeLast(Period).Sum() - slope * sumX) / period;
 
-        var result = new BasicResult()
-        {
-            OpenOn = dataPoint.OpenOn,
-            Value = index == 0 ? dataPoint.Value : (intercept + slope * (period - 1))
-        };
+        var value = index == 0 ? dataPoint.Value : (intercept + slope * (period - 1));
 
         index++;
 
-        return result;
+        return GetBasicResult(dataPoint.CloseOn, value);
     }
 }

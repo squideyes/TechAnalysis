@@ -11,18 +11,18 @@ public class BollingerBandsIndictor : BasicIndicatorBase
     private readonly StdDevIndicator stdDevIndicator;
     private readonly double stdDevFactor;
 
-    public BollingerBandsIndictor(int period, 
-        PriceToUse priceToUse = PriceToUse.Close, double stdDevFactor = 2.0)
-        : base(period, priceToUse, 2)
+    public BollingerBandsIndictor(int period, PriceToUse priceToUse = 
+        PriceToUse.Close, int maxResults = 10, double stdDevFactor = 2.0)
+        : base(period, priceToUse, maxResults)
     {
         if (stdDevFactor <= 0.0)
             throw new ArgumentOutOfRangeException(nameof(stdDevFactor));
 
         this.stdDevFactor = stdDevFactor;
 
-        smaIndicator = new SmaIndicator(period, priceToUse);
+        smaIndicator = new SmaIndicator(period, priceToUse, 2);
 
-        stdDevIndicator = new StdDevIndicator(period, priceToUse);
+        stdDevIndicator = new StdDevIndicator(period, priceToUse, 2);
     }
 
     public ChannelResult AddAndCalc(ICandle candle)
@@ -35,7 +35,7 @@ public class BollingerBandsIndictor : BasicIndicatorBase
 
         return new ChannelResult()
         {
-            OpenOn = candle.OpenOn,
+            CloseOn = candle.CloseOn,
             Upper = smaValue + delta,
             Middle = smaValue,
             Lower = smaValue - delta

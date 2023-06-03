@@ -11,8 +11,9 @@ public class AtrIndicator : BasicIndicatorBase, IBasicIndicator
     private double lastValue = 0.0;
     private ICandle lastCandle = null!;
 
-    public AtrIndicator(int period, PriceToUse priceToUse = PriceToUse.Close)
-        : base(period, priceToUse, 2)
+    public AtrIndicator(int period, 
+        PriceToUse priceToUse = PriceToUse.Close, int maxResults = 10)
+        : base(period, priceToUse, maxResults)
     {
     }
 
@@ -26,7 +27,7 @@ public class AtrIndicator : BasicIndicatorBase, IBasicIndicator
             lastCandle = candle;
             lastValue = high0 - low0;
 
-            return GetBasicResult(candle.OpenOn, lastValue);
+            return GetBasicResult(candle.CloseOn, lastValue);
         }
         else
         {
@@ -41,7 +42,7 @@ public class AtrIndicator : BasicIndicatorBase, IBasicIndicator
             lastCandle = candle;
             lastValue = result;
 
-            return GetBasicResult(candle.OpenOn, result);
+            return GetBasicResult(candle.CloseOn, result);
         }
     }
 }

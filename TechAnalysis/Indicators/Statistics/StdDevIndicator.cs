@@ -12,8 +12,9 @@ public class StdDevIndicator : BasicIndicatorBase, IBasicIndicator
 
     private int index = 0;
 
-    public StdDevIndicator(int period, PriceToUse priceToUse = PriceToUse.Close)
-        : base(period, priceToUse, 2)
+    public StdDevIndicator(int period, 
+        PriceToUse priceToUse = PriceToUse.Close, int maxResults = 10)
+        : base(period, priceToUse, maxResults)
     {
         prices = new SlidingBuffer<double>(period + 1, true);
         sumSeries = new SlidingBuffer<double>(period + 1, true);
@@ -22,7 +23,7 @@ public class StdDevIndicator : BasicIndicatorBase, IBasicIndicator
     public BasicResult AddAndCalc(ICandle candle)
     {
         var (openOn, value) = candle.ToBasicResult(PriceToUse)
-            .Funcify(r => (r.OpenOn, r.Value));
+            .Convert(r => (r.CloseOn, r.Value));
 
         prices.Add(value);
 

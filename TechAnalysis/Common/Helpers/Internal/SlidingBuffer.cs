@@ -11,7 +11,7 @@ public class SlidingBuffer<T> : IEnumerable<T>
 {
     private readonly List<T> buffer = new();
 
-    public SlidingBuffer(int size, bool reversed = false)
+    internal SlidingBuffer(int size, bool reversed = false)
     {
         if (size < 1)
             throw new ArgumentOutOfRangeException(nameof(size));

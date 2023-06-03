@@ -18,14 +18,18 @@ public class MacdIndicator
     private readonly double constant6;
     private readonly PriceToUse priceToUse;
 
+    private readonly SlidingBuffer<MacdResult> results;
+
     private int index = 0;
 
-    public MacdIndicator(int fast, int slow, int smooth, 
-        PriceToUse priceToUse = PriceToUse.Close)
+    public MacdIndicator(int fast, int slow, int smooth,
+        PriceToUse priceToUse = PriceToUse.Close, int maxResults = 10)
     {
         fastEmas = new SlidingBuffer<double>(fast, true);
         slowEmas = new SlidingBuffer<double>(slow, true);
         averages = new SlidingBuffer<double>(2, true);
+        results = new SlidingBuffer<MacdResult>(
+            maxResults.Validated(v => v >= 2), true);
 
         constant1 = 2.0 / (1 + fast);
         constant2 = 1 - (2.0 / (1 + fast));
@@ -37,6 +41,8 @@ public class MacdIndicator
         this.priceToUse = priceToUse;
     }
 
+    public MacdResult this[int index] => results[index];
+
     public MacdResult AddAndCalc(ICandle candle)
     {
         var dataPoint = candle.ToBasicResult(priceToUse);
@@ -45,15 +51,17 @@ public class MacdIndicator
         slowEmas.Add(0.0);
         averages.Add(0.0);
 
+        MacdResult result;
+
         if (index++ == 0)
         {
             fastEmas.Update(dataPoint.Value);
             slowEmas.Update(dataPoint.Value);
             averages.Update(0.0);
 
-            return new MacdResult()
+            result = new MacdResult()
             {
-                OpenOn = candle.OpenOn,
+                CloseOn = candle.CloseOn,
                 Value = 0.0,
                 Average = 0.0,
                 Difference = 0.0
@@ -70,13 +78,17 @@ public class MacdIndicator
             slowEmas.Update(slowEmaValue);
             averages.Update(average);
 
-            return new MacdResult()
+            result = new MacdResult()
             {
-                OpenOn = candle.OpenOn,
+                CloseOn = candle.CloseOn,
                 Value = macd,
                 Average = average,
                 Difference = macd - average,
             };
         }
+
+        results.Add(result);
+
+        return result;
     }
 }

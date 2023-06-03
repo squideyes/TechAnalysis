@@ -7,7 +7,7 @@ namespace SquidEyes.TechAnalysis;
 
 public interface ICandle
 {
-    DateTime OpenOn { get; }
+    DateTime CloseOn { get; }
     float Open { get; }
     float High { get; }
     float Low { get; }
