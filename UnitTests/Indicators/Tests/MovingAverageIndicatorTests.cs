@@ -14,6 +14,8 @@ namespace SquidEyes.UnitTests;
 
 /// <summary>
 /// Comprehensive tests for Moving Average indicators including SMA, EMA, DEMA, TEMA, WMA, SMMA, and KAMA
+/// Also includes VWMA (Volume-Weighted Moving Average)
+
 /// </summary>
 public class MovingAverageIndicatorTests
 {
@@ -50,7 +52,7 @@ public class MovingAverageIndicatorTests
         foreach (var candle in testCandles)
         {
             var result = indicator.AddAndCalc(candle);
-            
+
             // Assert
             result.Should().NotBeNull();
             result.CloseOn.Should().Be(candle.CloseOn);
@@ -69,7 +71,7 @@ public class MovingAverageIndicatorTests
         for (int i = 0; i < testCandles.Count; i++)
         {
             indicator.AddAndCalc(testCandles[i]);
-            
+
             if (i < period - 1)
                 indicator.IsPrimed.Should().BeFalse($"Indicator should not be primed at index {i}");
             else
@@ -124,7 +126,7 @@ public class MovingAverageIndicatorTests
     {
         // Arrange
         var indicator = new EmaIndicator(5, PriceToUse.Close, 10);
-        var testCandle = CreateTestCandle(DateTime.Now, 100, 105, 95, 102);
+        var testCandle = CreateTestCandle(new DateTime(2023, 1, 1), 100, 105, 95, 102);
         var basicResult = new BasicResult { CloseOn = testCandle.CloseOn, Value = 102 };
 
         // Act
@@ -259,7 +261,7 @@ public class MovingAverageIndicatorTests
     {
         var candles = new List<TestCandle>();
         var baseDate = new DateTime(2023, 1, 1);
-        
+
         for (int i = 0; i < count; i++)
         {
             candles.Add(new TestCandle
@@ -271,7 +273,7 @@ public class MovingAverageIndicatorTests
                 Close = 102 + i
             });
         }
-        
+
         return candles;
     }
 

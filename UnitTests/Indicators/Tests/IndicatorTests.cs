@@ -23,7 +23,7 @@ public class LegacyIndicatorBaselineTests
     public void KeltnerChannelIndicator_WithBaselineData_ShouldCalculateExpectedValues()
     {
         // Arrange
-        var indicator = new KeltnerChannelIndictor(20, PriceToUse.Close, 2, 1.5);
+        var indicator = new KeltnerChannelIndicator(20, PriceToUse.Close, 2, 1.5);
         var baselines = GetKeltnerChannelBaselines();
 
         // Act & Assert
@@ -44,7 +44,7 @@ public class LegacyIndicatorBaselineTests
     public void BollingerBandsIndicator_WithBaselineData_ShouldCalculateExpectedValues()
     {
         // Arrange
-        var indicator = new BollingerBandsIndictor(10, PriceToUse.Close, 2, 2.0);
+        var indicator = new BollingerBandsIndicator(10, PriceToUse.Close, 2, 2.0);
         var baselines = GetBollingerBandsBaselines();
 
         // Act & Assert

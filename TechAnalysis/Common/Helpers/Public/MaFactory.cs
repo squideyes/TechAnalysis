@@ -18,6 +18,7 @@ public static class MaFactory
             MaKind.Smma => new SmmaIndicator(period, priceToUse, maxResults),
             MaKind.Tema => new TemaIndicator(period, priceToUse, maxResults),
             MaKind.Wma => new WmaIndicator(period, priceToUse, maxResults),
+            MaKind.Vwma => new VwmaIndicator(period, priceToUse, maxResults),
             _ => throw new ArgumentOutOfRangeException(nameof(period))
         };
     }

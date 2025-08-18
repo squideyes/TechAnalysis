@@ -25,7 +25,7 @@
 To be clear, there are a good number of C#-based technical indicator libraries (i.e. [Trady](https://github.com/karlwancl/Trady), [Stock Indicators](https://github.com/DaveSkender/Stock.Indicators), [TA-Lib.NETCore](https://github.com/hmG3/TA-Lib.NETCore), and [NetTrader]( https://github.com/anilca/NetTrader.Indicator), just to name a few), but the author found each of these to be objectionable for one or more reasons:
 
 * Poor performance (whether from use of decimals or otherwise)
-* Poor standardization 
+* Poor standardization
 * No provision for float-based candles
 * Reliance upon inflexible and inbuilt result-persistence layers
 
@@ -36,21 +36,24 @@ To take a rather simple example, an EmaIndicator might be used as follows:
 static void PrintResult(BasicResult result) =>
     Debug.WriteLine($"{result.CloseOn} ={result.Value}");
 
-// CloseOn,Open,High,Low,Close data in CSV multi-line format
+// CloseOn,Open,High,Low,Close[,Volume] data in CSV multi-line format
 const string CSV = """
     05/15/2023 14:36:00,12872.75,12873.75,12866,12870.75
     05/15/2023 14:37:00,12871.25,12871.5,12864.75,12869.5
     05/15/2023 14:38:00,12869.25,12871.75,12867.5,12871.25
     05/15/2023 14:39:00,12871,12873.75,12869.5,12872.75
-    05/15/2023 14:40:00,12872.75,12873.75,12867.75,12870.5 
+    05/15/2023 14:40:00,12872.75,12873.75,12867.75,12870.5
     """;
+// Optionally include Volume as a sixth field per line
+// e.g., 05/15/2023 14:36:00,12872.75,12873.75,12866,12870.75,15000
+
 
 // Most of the indicators return BasicResult, but a few return
 // custom results (BollingerIndicator, MacddIndicator, etc.)
 var indicator = new EmaIndicator(period: 3,
     priceToUse: PriceToUse.Close, maxResults: 10000);
 
-// Parse the data then 
+// Parse the data then
 foreach (var fields in new CsvEnumerator(CSV.ToStream(), 5))
 {
     var candle = new TestCandle()
@@ -59,11 +62,12 @@ foreach (var fields in new CsvEnumerator(CSV.ToStream(), 5))
         Open = double.Parse(fields[1]),
         High = double.Parse(fields[2]),
         Low = double.Parse(fields[3]),
-        Close = double.Parse(fields[4])
+        Close = double.Parse(fields[4]),
+        Volume = (fields.Length > 5 ? double.Parse(fields[5]) : 10000 + (double.Parse(fields[2]) - double.Parse(fields[3])) * 1000)
     };
 
     // Adds the current result to the indicator's results
-    // collection (a reversed SlidingBuffer) then returns 
+    // collection (a reversed SlidingBuffer) then returns
     // that result directly
     _ = indicator.AddAndCalc(candle);
 

@@ -13,20 +13,20 @@ internal static class TestData
 {
     public class StochasticsBaseLine
     {
-        public ICandle Candle { get; init; }
+        public required ICandle Candle { get; init; }
         public double K { get; init; }
         public double D { get; init; }
     }
 
     public class ValueBaseline
     {
-        public ICandle Candle { get; init; }
+        public required ICandle Candle { get; init; }
         public double Value { get; init; }
     }
 
     public class ThreeBandBaseline
     {
-        public ICandle Candle { get; init; }
+        public required ICandle Candle { get; init; }
         public double Upper { get; init; }
         public double Middle { get; init; }
         public double Lower { get; init; }
@@ -34,7 +34,7 @@ internal static class TestData
 
     public class MacdBaseline
     {
-        public ICandle Candle { get; init; }
+        public required ICandle Candle { get; init; }
         public double Value { get; init; }
         public double Average { get; init; }
         public double Difference { get; init; }
@@ -1606,13 +1606,20 @@ internal static class TestData
     private static ICandle GetCandle(
         int hour, int minute, double open, double high, double low, double close)
     {
+        // Synthesize a plausible volume: base + range/body contributions + time factor
+        var range = Math.Abs(high - low);
+        var body = Math.Abs(close - open);
+        var timeFactor = (hour * 60) + minute;
+        var volume = 10000.0 + (range * 1000.0) + (body * 500.0) + timeFactor;
+
         return new TestCandle()
         {
             CloseOn = new DateTime(2021, 3, 30, hour, minute, 0),
             Open = open,
             High = high,
             Low = low,
-            Close = close
+            Close = close,
+            Volume = volume
         };
     }
 

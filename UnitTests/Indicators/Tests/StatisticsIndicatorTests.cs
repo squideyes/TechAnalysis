@@ -158,6 +158,21 @@ public class StatisticsIndicatorTests
     }
 
     [Theory]
+    [InlineData(10, 5, 3)] // Fast period greater than slow period
+    [InlineData(5, 5, 3)]  // Fast period equal to slow period
+    [InlineData(1, 10, 3)] // Invalid fast period
+    [InlineData(5, 1, 3)]  // Invalid slow period
+    [InlineData(5, 10, 0)] // Invalid smooth period
+    [InlineData(5, 10, -1)] // Invalid smooth period
+    public void MacdIndicator_WithInvalidParameters_ShouldThrowArgumentOutOfRangeException(
+        int fast, int slow, int smooth)
+    {
+        // Act & Assert
+        Action act = () => new MacdIndicator(fast, slow, smooth, PriceToUse.Close, 10);
+        act.Should().Throw<ArgumentOutOfRangeException>();
+    }
+
+    [Theory]
     [InlineData(1)]
     [InlineData(0)]
     [InlineData(-1)]

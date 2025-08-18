@@ -12,4 +12,5 @@ public interface ICandle
     double High { get; }
     double Low { get; }
     double Close { get; }
+    double Volume { get; }
 }

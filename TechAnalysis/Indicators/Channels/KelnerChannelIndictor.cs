@@ -5,7 +5,7 @@
 
 namespace SquidEyes.TechAnalysis;
 
-public class KeltnerChannelIndictor : BasicIndicatorBase
+public class KeltnerChannelIndicator : BasicIndicatorBase
 {
     private readonly double offsetMultiplier;
     private readonly SmaIndicator smaDiff;
@@ -13,7 +13,7 @@ public class KeltnerChannelIndictor : BasicIndicatorBase
     private readonly SlidingBuffer<double> diff;
     private readonly SlidingBuffer<double> typical;
 
-    public KeltnerChannelIndictor(int period, PriceToUse priceToUse = PriceToUse.Close, 
+    public KeltnerChannelIndicator(int period, PriceToUse priceToUse = PriceToUse.Close,
         int maxResults = 10, double offsetMultiplier = 1.5)
         : base(period, priceToUse, maxResults)
     {

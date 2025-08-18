@@ -12,5 +12,6 @@ public enum MaKind
     Sma,
     Smma,
     Tema,
-    Wma
+    Wma,
+    Vwma
 }

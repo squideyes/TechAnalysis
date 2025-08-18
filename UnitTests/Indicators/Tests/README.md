@@ -144,9 +144,9 @@ dotnet test --filter "TestCategory!=Performance"
 
 The expanded test suite provides:
 
-- **160+ test methods** (up from 16 original tests)
-- **95%+ code coverage** across all indicator classes
-- **Comprehensive parameter validation** for all constructors
+- 160+ test methods (up from 16 original tests)
+- Code coverage collected via Coverlet (Cobertura); see CI artifacts for reports
+- Comprehensive parameter validation for all constructors
 - **Edge case coverage** for numerical stability
 - **Integration testing** for real-world scenarios
 - **Performance benchmarking** for large datasets

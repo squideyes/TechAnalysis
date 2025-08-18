@@ -133,8 +133,8 @@ public class OscillatorIndicatorTests
     {
         // Arrange
         var indicator = new StochasticsIndicator(5, 3, 3);
-        var candle1 = CreateTestCandle(DateTime.Now, 100, 110, 90, 105);
-        var candle2 = CreateTestCandle(DateTime.Now.AddDays(1), 105, 115, 95, 110);
+        var candle1 = CreateTestCandle(new DateTime(2023, 1, 1), 100, 110, 90, 105);
+        var candle2 = CreateTestCandle(new DateTime(2023, 1, 2), 105, 115, 95, 110);
 
         // Act
         var result1 = indicator.AddAndCalc(candle1);
@@ -152,8 +152,8 @@ public class OscillatorIndicatorTests
     {
         // Arrange
         var indicator = new StochasticsIndicator(5, 3, 3);
-        var candle1 = CreateTestCandle(DateTime.Now, 100, 110, 90, 105);
-        var candle2 = CreateTestCandle(DateTime.Now, 105, 115, 95, 110); // Same date, different values
+        var candle1 = CreateTestCandle(new DateTime(2023, 1, 1), 100, 110, 90, 105);
+        var candle2 = CreateTestCandle(new DateTime(2023, 1, 1), 105, 115, 95, 110); // Same date, different values
 
         // Act
         var addResult = indicator.AddAndCalc(candle1);

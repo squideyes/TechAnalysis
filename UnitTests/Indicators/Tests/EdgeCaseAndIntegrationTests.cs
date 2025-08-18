@@ -93,7 +93,7 @@ public class EdgeCaseAndIntegrationTests
     public void BollingerBandsIndicator_WithZeroStandardDeviation_ShouldHandleCorrectly()
     {
         // Arrange
-        var indicator = new BollingerBandsIndictor(5, PriceToUse.Close, 10, 2.0);
+        var indicator = new BollingerBandsIndicator(5, PriceToUse.Close, 10, 2.0);
         var constantPriceCandles = CreateIdenticalPriceCandles(10, 100.0);
 
         // Act & Assert
@@ -173,7 +173,7 @@ public class EdgeCaseAndIntegrationTests
     public void BollingerBandsIndicator_ShouldUseCorrectUnderlyingIndicators()
     {
         // Arrange
-        var bbIndicator = new BollingerBandsIndictor(10, PriceToUse.Close, 5, 2.0);
+        var bbIndicator = new BollingerBandsIndicator(10, PriceToUse.Close, 5, 2.0);
         var smaIndicator = new SmaIndicator(10, PriceToUse.Close, 5);
         var stdDevIndicator = new StdDevIndicator(10, PriceToUse.Close, 5);
         
@@ -261,6 +261,7 @@ public class EdgeCaseAndIntegrationTests
 
     #region Performance Tests
 
+    [Trait("TestCategory","Performance")]
     [Fact]
     public void Indicators_WithLargeDataset_ShouldPerformReasonably()
     {

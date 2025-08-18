@@ -15,4 +15,5 @@ public class TestCandle : ICandle
     public double High { get; init; }
     public double Low { get; init; }
     public double Close { get; init; }
+    public double Volume { get; init; }
 }

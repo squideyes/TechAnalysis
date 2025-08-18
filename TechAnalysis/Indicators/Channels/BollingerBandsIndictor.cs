@@ -5,13 +5,13 @@
 
 namespace SquidEyes.TechAnalysis;
 
-public class BollingerBandsIndictor : BasicIndicatorBase
+public class BollingerBandsIndicator : BasicIndicatorBase
 {
     private readonly SmaIndicator smaIndicator;
     private readonly StdDevIndicator stdDevIndicator;
     private readonly double stdDevFactor;
 
-    public BollingerBandsIndictor(int period, PriceToUse priceToUse = 
+    public BollingerBandsIndicator(int period, PriceToUse priceToUse =
         PriceToUse.Close, int maxResults = 10, double stdDevFactor = 2.0)
         : base(period, priceToUse, maxResults)
     {

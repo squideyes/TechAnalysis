@@ -23,7 +23,7 @@ public class ChannelIndicatorTests
     public void BollingerBandsIndicator_WithValidParameters_ShouldCalculateCorrectValues()
     {
         // Arrange
-        var indicator = new BollingerBandsIndictor(10, PriceToUse.Close, 2, 2.0);
+        var indicator = new BollingerBandsIndicator(10, PriceToUse.Close, 2, 2.0);
         var baselines = GetBollingerBandsBaselines();
 
         // Act & Assert
@@ -47,7 +47,7 @@ public class ChannelIndicatorTests
     public void BollingerBandsIndicator_WithDifferentPriceTypes_ShouldCalculateCorrectly(PriceToUse priceToUse)
     {
         // Arrange
-        var indicator = new BollingerBandsIndictor(10, priceToUse, 5, 2.0);
+        var indicator = new BollingerBandsIndicator(10, priceToUse, 5, 2.0);
         var testCandles = CreateTestCandles(15);
 
         // Act & Assert
@@ -71,7 +71,7 @@ public class ChannelIndicatorTests
     public void BollingerBandsIndicator_WithDifferentStdDevFactors_ShouldAdjustBandWidth(double stdDevFactor)
     {
         // Arrange
-        var indicator = new BollingerBandsIndictor(10, PriceToUse.Close, 5, stdDevFactor);
+        var indicator = new BollingerBandsIndicator(10, PriceToUse.Close, 5, stdDevFactor);
         var testCandles = CreateTestCandles(15);
 
         // Act
@@ -101,7 +101,7 @@ public class ChannelIndicatorTests
     public void BollingerBandsIndicator_WithInvalidStdDevFactor_ShouldThrowArgumentOutOfRangeException(double invalidStdDevFactor)
     {
         // Act & Assert
-        Action act = () => new BollingerBandsIndictor(10, PriceToUse.Close, 5, invalidStdDevFactor);
+        Action act = () => new BollingerBandsIndicator(10, PriceToUse.Close, 5, invalidStdDevFactor);
         act.Should().Throw<ArgumentOutOfRangeException>();
     }
 
@@ -112,7 +112,7 @@ public class ChannelIndicatorTests
     public void BollingerBandsIndicator_WithInvalidPeriod_ShouldThrowArgumentOutOfRangeException(int invalidPeriod)
     {
         // Act & Assert
-        Action act = () => new BollingerBandsIndictor(invalidPeriod, PriceToUse.Close, 5, 2.0);
+        Action act = () => new BollingerBandsIndicator(invalidPeriod, PriceToUse.Close, 5, 2.0);
         act.Should().Throw<ArgumentOutOfRangeException>();
     }
 
@@ -124,7 +124,7 @@ public class ChannelIndicatorTests
     public void KeltnerChannelIndicator_WithValidParameters_ShouldCalculateCorrectValues()
     {
         // Arrange
-        var indicator = new KeltnerChannelIndictor(20, PriceToUse.Close, 2, 1.5);
+        var indicator = new KeltnerChannelIndicator(20, PriceToUse.Close, 2, 1.5);
         var baselines = GetKeltnerChannelBaselines();
 
         // Act & Assert
@@ -148,7 +148,7 @@ public class ChannelIndicatorTests
     public void KeltnerChannelIndicator_WithDifferentPriceTypes_ShouldCalculateCorrectly(PriceToUse priceToUse)
     {
         // Arrange
-        var indicator = new KeltnerChannelIndictor(10, priceToUse, 5, 1.5);
+        var indicator = new KeltnerChannelIndicator(10, priceToUse, 5, 1.5);
         var testCandles = CreateTestCandles(15);
 
         // Act & Assert
@@ -173,7 +173,7 @@ public class ChannelIndicatorTests
     public void KeltnerChannelIndicator_WithValidOffsetMultipliers_ShouldCalculateCorrectly(double offsetMultiplier)
     {
         // Arrange
-        var indicator = new KeltnerChannelIndictor(10, PriceToUse.Close, 5, offsetMultiplier);
+        var indicator = new KeltnerChannelIndicator(10, PriceToUse.Close, 5, offsetMultiplier);
         var testCandles = CreateTestCandles(15);
 
         // Act
@@ -198,7 +198,7 @@ public class ChannelIndicatorTests
     public void KeltnerChannelIndicator_WithInvalidOffsetMultiplier_ShouldThrowArgumentOutOfRangeException(double invalidOffsetMultiplier)
     {
         // Act & Assert
-        Action act = () => new KeltnerChannelIndictor(10, PriceToUse.Close, 5, invalidOffsetMultiplier);
+        Action act = () => new KeltnerChannelIndicator(10, PriceToUse.Close, 5, invalidOffsetMultiplier);
         act.Should().Throw<ArgumentOutOfRangeException>();
     }
 
@@ -206,8 +206,8 @@ public class ChannelIndicatorTests
     public void KeltnerChannelIndicator_ShouldUseTypicalPriceAndTrueRange()
     {
         // Arrange
-        var indicator = new KeltnerChannelIndictor(5, PriceToUse.Close, 10, 1.5);
-        var candle = CreateTestCandle(DateTime.Now, 100, 110, 90, 105);
+        var indicator = new KeltnerChannelIndicator(5, PriceToUse.Close, 10, 1.5);
+        var candle = CreateTestCandle(new DateTime(2023, 1, 1), 100, 110, 90, 105);
 
         // Act
         var result = indicator.AddAndCalc(candle);
@@ -229,16 +229,16 @@ public class ChannelIndicatorTests
     #region Common Channel Tests
 
     [Theory]
-    [InlineData(typeof(BollingerBandsIndictor))]
-    [InlineData(typeof(KeltnerChannelIndictor))]
+    [InlineData(typeof(BollingerBandsIndicator))]
+    [InlineData(typeof(KeltnerChannelIndicator))]
     public void ChannelIndicators_ShouldMaintainProperBandOrdering(Type indicatorType)
     {
         // Arrange
         object indicator;
-        if (indicatorType == typeof(BollingerBandsIndictor))
-            indicator = new BollingerBandsIndictor(10, PriceToUse.Close, 5, 2.0);
+        if (indicatorType == typeof(BollingerBandsIndicator))
+            indicator = new BollingerBandsIndicator(10, PriceToUse.Close, 5, 2.0);
         else
-            indicator = new KeltnerChannelIndictor(10, PriceToUse.Close, 5, 1.5);
+            indicator = new KeltnerChannelIndicator(10, PriceToUse.Close, 5, 1.5);
 
         var testCandles = CreateTestCandles(15);
 
@@ -246,10 +246,10 @@ public class ChannelIndicatorTests
         foreach (var candle in testCandles)
         {
             ChannelResult result;
-            if (indicator is BollingerBandsIndictor bb)
+            if (indicator is BollingerBandsIndicator bb)
                 result = bb.AddAndCalc(candle);
             else
-                result = ((KeltnerChannelIndictor)indicator).AddAndCalc(candle);
+                result = ((KeltnerChannelIndicator)indicator).AddAndCalc(candle);
 
             // Assert proper band ordering
             result.Upper.Should().BeGreaterThanOrEqualTo(result.Middle, 

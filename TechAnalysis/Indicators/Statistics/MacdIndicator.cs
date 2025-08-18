@@ -7,38 +7,35 @@ namespace SquidEyes.TechAnalysis;
 
 public class MacdIndicator
 {
-    private readonly SlidingBuffer<double> fastEmas;
-    private readonly SlidingBuffer<double> slowEmas;
-    private readonly SlidingBuffer<double> averages;
-    private readonly double constant1;
-    private readonly double constant2;
-    private readonly double constant3;
-    private readonly double constant4;
-    private readonly double constant5;
-    private readonly double constant6;
+    private readonly int fast;
+    private readonly int slow;
+    private readonly int smooth;
     private readonly PriceToUse priceToUse;
 
-    private readonly SlidingBuffer<MacdResult> results;
+    private readonly EmaIndicator emaFast;
+    private readonly EmaIndicator emaSlow;
+    private readonly EmaIndicator emaSignal;
 
-    private int index = 0;
+    private readonly SlidingBuffer<MacdResult> results;
 
     public MacdIndicator(int fast, int slow, int smooth,
         PriceToUse priceToUse = PriceToUse.Close, int maxResults = 10)
     {
-        fastEmas = new SlidingBuffer<double>(fast, true);
-        slowEmas = new SlidingBuffer<double>(slow, true);
-        averages = new SlidingBuffer<double>(2, true);
+        this.fast = fast.Validated(v => v >= 2);
+        this.slow = slow.Validated(v => v >= 2);
+        this.smooth = smooth.Validated(v => v >= 1);
+
+        if (this.fast >= this.slow)
+            throw new ArgumentOutOfRangeException(nameof(fast));
+
+        this.priceToUse = priceToUse.Validated(v => v.IsEnumValue());
+
+        emaFast = new EmaIndicator(this.fast, this.priceToUse, 2);
+        emaSlow = new EmaIndicator(this.slow, this.priceToUse, 2);
+        emaSignal = new EmaIndicator(this.smooth, PriceToUse.Close, 2);
+
         results = new SlidingBuffer<MacdResult>(
             maxResults.Validated(v => v >= 2), true);
-
-        constant1 = 2.0 / (1 + fast);
-        constant2 = 1 - (2.0 / (1 + fast));
-        constant3 = 2.0 / (1 + slow);
-        constant4 = 1 - (2.0 / (1 + slow));
-        constant5 = 2.0 / (1 + smooth);
-        constant6 = 1 - (2.0 / (1 + smooth));
-
-        this.priceToUse = priceToUse;
     }
 
     public MacdResult this[int index] => results[index];
@@ -47,48 +44,33 @@ public class MacdIndicator
     {
         var dataPoint = candle.ToBasicResult(priceToUse);
 
-        fastEmas.Add(0.0);
-        slowEmas.Add(0.0);
-        averages.Add(0.0);
+        var fastValue = emaFast.AddAndCalc(dataPoint).Value;
+        var slowValue = emaSlow.AddAndCalc(dataPoint).Value;
 
-        MacdResult result;
+        double macd = 0.0;
+        var macdValid = emaFast.IsPrimed && emaSlow.IsPrimed;
+        if (macdValid)
+            macd = fastValue - slowValue;
 
-        if (index++ == 0)
+        double avg = 0.0;
+        if (macdValid)
         {
-            fastEmas.Update(dataPoint.Value);
-            slowEmas.Update(dataPoint.Value);
-            averages.Update(0.0);
-
-            result = new MacdResult()
-            {
-                CloseOn = candle.CloseOn,
-                Value = 0.0,
-                Average = 0.0,
-                Difference = 0.0
-            };
+            var signal = emaSignal.AddAndCalc(new BasicResult { CloseOn = candle.CloseOn, Value = macd }).Value;
+            if (emaSignal.IsPrimed)
+                avg = signal;
         }
-        else
+
+        var diff = macd - avg;
+
+        var result = new MacdResult()
         {
-            var fastEmaValue = constant1 * dataPoint.Value + constant2 * fastEmas[1];
-            var slowEmaValue = constant3 * dataPoint.Value + constant4 * slowEmas[1];
-            var macd = fastEmaValue - slowEmaValue;
-            var average = constant5 * macd + constant6 * averages[1];
-
-            fastEmas.Update(fastEmaValue);
-            slowEmas.Update(slowEmaValue);
-            averages.Update(average);
-
-            result = new MacdResult()
-            {
-                CloseOn = candle.CloseOn,
-                Value = macd,
-                Average = average,
-                Difference = macd - average,
-            };
-        }
+            CloseOn = candle.CloseOn,
+            Value = macd,
+            Average = avg,
+            Difference = diff
+        };
 
         results.Add(result);
-
         return result;
     }
 }

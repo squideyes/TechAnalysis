@@ -43,7 +43,8 @@ public class ReadmeHowTo
                 Open = double.Parse(fields[1]),
                 High = double.Parse(fields[2]),
                 Low = double.Parse(fields[3]),
-                Close = double.Parse(fields[4])
+                Close = double.Parse(fields[4]),
+                Volume = (fields.Length > 5 ? double.Parse(fields[5]) : 10000 + (double.Parse(fields[2]) - double.Parse(fields[3])) * 1000)
             };
 
             // Adds the current result to the indicator's results
