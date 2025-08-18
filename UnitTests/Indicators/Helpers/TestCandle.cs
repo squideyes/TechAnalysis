@@ -11,8 +11,8 @@ namespace SquidEyes.UnitTests;
 public class TestCandle : ICandle
 {
     public DateTime CloseOn { get; init; }
-    public float Open { get; init; }
-    public float High { get; init; }
-    public float Low { get; init; }
-    public float Close { get; init; }
+    public double Open { get; init; }
+    public double High { get; init; }
+    public double Low { get; init; }
+    public double Close { get; init; }
 }

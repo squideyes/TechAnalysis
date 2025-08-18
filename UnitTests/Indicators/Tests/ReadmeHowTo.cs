@@ -40,10 +40,10 @@ public class ReadmeHowTo
             var candle = new TestCandle()
             {
                 CloseOn = DateTime.Parse(fields[0]),
-                Open = float.Parse(fields[1]),
-                High = float.Parse(fields[2]),
-                Low = float.Parse(fields[3]),
-                Close = float.Parse(fields[4])
+                Open = double.Parse(fields[1]),
+                High = double.Parse(fields[2]),
+                Low = double.Parse(fields[3]),
+                Close = double.Parse(fields[4])
             };
 
             // Adds the current result to the indicator's results

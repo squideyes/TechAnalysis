@@ -7,7 +7,7 @@ namespace SquidEyes.TechAnalysis;
 
 public class SmmaIndicator : BasicIndicatorBase, IBasicIndicator
 {
-    private readonly SlidingBuffer<float> buffer;
+    private readonly SlidingBuffer<double> buffer;
 
     private int index = 0;
     private double lastSmma = 0;
@@ -19,7 +19,7 @@ public class SmmaIndicator : BasicIndicatorBase, IBasicIndicator
         PriceToUse priceToUse = PriceToUse.Close, int maxResults = 10)
         : base(period, priceToUse, maxResults)
     {
-        buffer = new SlidingBuffer<float>(period);
+        buffer = new SlidingBuffer<double>(period);
     }
 
     public BasicResult AddAndCalc(ICandle candle)

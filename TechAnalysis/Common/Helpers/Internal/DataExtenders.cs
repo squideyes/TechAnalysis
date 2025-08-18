@@ -7,7 +7,7 @@ namespace SquidEyes.TechAnalysis;
 
 public static class DataExtenders
 {
-    public static float GetPrice(this ICandle candle, PriceToUse priceToUse) => 
+    public static double GetPrice(this ICandle candle, PriceToUse priceToUse) =>
         priceToUse switch
         {
             PriceToUse.Open => candle.Open,

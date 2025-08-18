@@ -1604,7 +1604,7 @@ internal static class TestData
     }
 
     private static ICandle GetCandle(
-        int hour, int minute, float open, float high, float low, float close)
+        int hour, int minute, double open, double high, double low, double close)
     {
         return new TestCandle()
         {
@@ -1616,8 +1616,8 @@ internal static class TestData
         };
     }
 
-    private static ThreeBandBaseline GetThreeBandBaseline(int hour, int minute, float open,
-        float high, float low, float close, double upper, double middle, double lower)
+    private static ThreeBandBaseline GetThreeBandBaseline(int hour, int minute, double open,
+        double high, double low, double close, double upper, double middle, double lower)
     {
         return new ThreeBandBaseline()
         {
